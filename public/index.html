@@ -1,0 +1,1087 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Christopher Olabiyi (CODEX) - Web Developer, Cybersecurity Student, and Linux Enthusiast. Building secure and practical systems."
+    />
+    <meta
+      name="keywords"
+      content="web developer, cybersecurity, linux, portfolio, christopher olabiyi, codex, michris"
+    />
+    <meta name="author" content="Christopher Olabiyi" />
+    <meta name="theme-color" content="#0b0f17" />
+    <title>CODEX | Christopher Olabiyi - Web Developer & Cybersecurity</title>
+
+    <!-- Favicon & Manifest -->
+    <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Preconnect for fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <!-- Canvas Background -->
+    <canvas id="cyber-canvas" aria-hidden="true"></canvas>
+
+    <!-- Header -->
+    <header class="header" id="header">
+      <nav class="navbar container">
+        <a href="#home" class="nav-logo" aria-label="Home">
+          <span class="logo-bracket">&lt;</span>CODEX<span class="logo-slash"
+            >/</span
+          ><span class="logo-bracket">&gt;</span>
+        </a>
+        <ul class="nav-menu" id="nav-menu" role="navigation">
+          <li class="nav-item"><a href="#home" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+          <li class="nav-item">
+            <a href="#skills" class="nav-link">Skills</a>
+          </li>
+          <li class="nav-item">
+            <a href="#projects" class="nav-link">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a href="#roadmap" class="nav-link">Roadmap</a>
+          </li>
+          <li class="nav-item"><a href="#cv" class="nav-link">CV</a></li>
+          <li class="nav-item">
+            <a href="#contact" class="nav-link">Contact</a>
+          </li>
+        </ul>
+        <button
+          class="nav-toggle"
+          id="nav-toggle"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+        >
+          <span class="hamburger"></span>
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ========================================
+           1. HERO SECTION - Clean, identity in 5 seconds
+           ======================================== -->
+      <section class="hero section" id="home">
+        <div class="hero-content container reveal">
+          <!-- Headshot -->
+          <div class="hero-image-wrapper">
+            <div class="hero-image-aura"></div>
+            <div class="hero-image">
+              <img
+                src="/assets/images/headshot.jpg"
+                alt="Christopher Olabiyi"
+                class="hero-headshot"
+                onerror="
+                  this.style.display = 'none';
+                  this.nextElementSibling.style.display = 'flex';
+                "
+              />
+              <div class="hero-image-fallback" style="display: none">
+                <span class="fallback-initials">CO</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Text -->
+          <div class="hero-text">
+            <!-- Typing SVG Name -->
+            <h1 class="hero-name">
+              <svg
+                viewBox="0 0 900 80"
+                preserveAspectRatio="xMinYMid meet"
+                class="typing-svg"
+                id="typing-svg"
+                aria-label="Christopher Olabiyi"
+              >
+                <defs>
+                  <filter id="text-glow">
+                    <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+                    <feMerge>
+                      <feMergeNode in="coloredBlur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                </defs>
+                <text
+                  id="typeText"
+                  x="0"
+                  y="48"
+                  text-anchor="start"
+                  font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+                  font-size="42"
+                  font-weight="700"
+                  fill="#ffffff"
+                  filter="url(#text-glow)"
+                ></text>
+                <text
+                  id="cursor"
+                  x="0"
+                  y="48"
+                  font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+                  font-size="42"
+                  font-weight="400"
+                  fill="#00f0ff"
+                  class="typing-cursor-text"
+                >
+                  |
+                </text>
+              </svg>
+              <noscript
+                ><span class="name-text">Christopher Olabiyi</span></noscript
+              >
+            </h1>
+
+            <!-- Title -->
+            <p class="hero-title">
+              <span>Web Developer</span>
+              <span class="separator">|</span>
+              <span>Cybersecurity Student</span>
+              <span class="separator">|</span>
+              <span>Linux Enthusiast</span>
+            </p>
+
+            <!-- Two CTA Buttons Only -->
+            <div class="hero-buttons">
+              <a href="#projects" class="btn btn-primary">
+                <svg
+                  class="btn-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
+                  />
+                </svg>
+                View Projects
+              </a>
+              <a href="#contact" class="btn btn-outline">
+                <svg
+                  class="btn-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                  />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+                Contact Me
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           2. ABOUT SECTION - Short and Direct
+           ======================================== -->
+      <section class="about section" id="about">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-label">About Me</span>
+            <h2 class="section-title">Who I Am</h2>
+          </div>
+
+          <div class="about-content reveal">
+            <p class="about-text-main">
+              I'm a
+              <strong
+                >BSc student at Ladoke Akintola University of Technology
+                (LAUTECH)</strong
+              >, focused on <strong>web development</strong>,
+              <strong>Linux systems</strong>, and
+              <strong>cybersecurity fundamentals</strong>. I build practical,
+              secure systems using PHP, JavaScript, and open-source tools.
+              Currently deepening my knowledge in backend security and system
+              automation while working on real-world projects.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           3. SKILLS SECTION - Premium Layout
+           ======================================== -->
+      <section class="section" id="skills">
+        <div class="container">
+          <header class="section-head reveal">
+            <span class="section-label">Expertise</span>
+            <h2 class="section-title">Skills & Capabilities</h2>
+            <p class="section-subtitle">
+              Self-assessed from hands-on work. Updated as projects ship.
+            </p>
+          </header>
+
+          <!-- Capability Summary Strip -->
+          <div id="skillsSummary" class="skills-summary"></div>
+
+          <!-- Skill Category Panels -->
+          <div id="skillsGrid" class="skills-grid"></div>
+
+          <!-- Evidence Toggle -->
+          <div class="skills-evidence-toggle reveal">
+            <button
+              type="button"
+              class="btn btn-outline btn-sm"
+              id="toggleEvidence"
+              aria-expanded="false"
+              aria-controls="skillsEvidence"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                width="16"
+                height="16"
+              >
+                <path d="M9 12l2 2 4-4" />
+                <circle cx="12" cy="12" r="10" />
+              </svg>
+              <span>Show Skill Evidence</span>
+            </button>
+          </div>
+
+          <!-- Evidence Panel (hidden by default) -->
+          <div
+            id="skillsEvidence"
+            class="skills-evidence glass-panel"
+            aria-hidden="true"
+          ></div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           PROOF OF WORK SECTION
+           ======================================== -->
+      <section class="section" id="proof">
+        <div class="container">
+          <header class="section-head reveal">
+            <span class="section-label">Validation</span>
+            <h2 class="section-title">Proof of Work</h2>
+            <p class="section-subtitle">
+              Concrete evidence backing my skill assessments.
+            </p>
+          </header>
+
+          <!-- Proof Cards - Populated by JS from EVIDENCE -->
+          <div id="proofGrid" class="proof-grid"></div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           CASE STUDIES SECTION
+           ======================================== -->
+      <section class="section" id="case-studies">
+        <div class="container">
+          <header class="section-head reveal">
+            <span class="section-label">Deep Dive</span>
+            <h2 class="section-title">Case Studies</h2>
+            <p class="section-subtitle">
+              Technical breakdowns of selected projects.
+            </p>
+          </header>
+
+          <!-- Filter Row -->
+          <div
+            class="case-filter reveal"
+            role="tablist"
+            aria-label="Filter case studies"
+          >
+            <button
+              type="button"
+              class="filter-btn active"
+              data-filter="all"
+              role="tab"
+              aria-selected="true"
+            >
+              All
+            </button>
+            <button
+              type="button"
+              class="filter-btn"
+              data-filter="in-progress"
+              role="tab"
+              aria-selected="false"
+            >
+              In Progress
+            </button>
+            <button
+              type="button"
+              class="filter-btn"
+              data-filter="shipped"
+              role="tab"
+              aria-selected="false"
+            >
+              Shipped
+            </button>
+          </div>
+
+          <!-- Case Study Cards - Populated by JS from CASE_STUDIES -->
+          <div id="caseStudiesGrid" class="case-grid"></div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           4. TOOLS & ENVIRONMENT
+           ======================================== -->
+      <section class="section" id="environment">
+        <div class="container">
+          <header class="section-head reveal">
+            <span class="section-label">Workflow</span>
+            <h2 class="section-title">Tools & Environment</h2>
+            <p class="section-desc">
+              The operating systems, development tools, and security software I
+              work with daily.
+            </p>
+          </header>
+          <div
+            id="envGrid"
+            class="env-grid"
+            role="list"
+            aria-label="Development environment and tools"
+          ></div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           5. SECURITY MINDSET
+           ======================================== -->
+      <section class="section" id="security">
+        <div class="container">
+          <header class="section-head reveal">
+            <span class="section-label">Philosophy</span>
+            <h2 class="section-title">Security Mindset</h2>
+            <p class="section-desc" id="securityIntro">
+              <!-- Populated by JS -->
+            </p>
+          </header>
+          <div
+            id="securityGrid"
+            class="security-grid"
+            role="list"
+            aria-label="Security principles"
+          ></div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           6. FEATURED PROJECT - Single Highlight
+           ======================================== -->
+      <section class="featured-project section" id="featured">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-label">Highlight</span>
+            <h2 class="section-title">Featured Project</h2>
+          </div>
+
+          <article class="featured-card glass-panel reveal">
+            <div class="featured-screenshot">
+              <div class="screenshot-placeholder">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0110 0v4" />
+                </svg>
+                <span>In Development</span>
+              </div>
+            </div>
+            <div class="featured-content">
+              <div class="featured-header">
+                <h3 class="featured-title">Secure Auth Starter Kit</h3>
+                <span class="project-status status-progress">IN PROGRESS</span>
+              </div>
+              <p class="featured-subtitle">Security-First Web Authentication</p>
+              <div class="featured-details">
+                <div class="detail-block">
+                  <h4>Problem</h4>
+                  <p>
+                    Many web applications lack proper security foundations—weak
+                    authentication, no rate limiting, and inadequate logging
+                    make them vulnerable to attacks.
+                  </p>
+                </div>
+                <div class="detail-block">
+                  <h4>Solution</h4>
+                  <p>
+                    Building a reusable authentication boilerplate with OTP
+                    verification, rate limiting, session management, and
+                    comprehensive security logging.
+                  </p>
+                </div>
+              </div>
+              <div class="featured-stack">
+                <span class="stack-tag">PHP</span>
+                <span class="stack-tag">MySQL</span>
+                <span class="stack-tag">AJAX</span>
+                <span class="stack-tag">Email API</span>
+                <span class="stack-tag">Security</span>
+              </div>
+              <div class="featured-links">
+                <span class="link-placeholder">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    width="16"
+                    height="16"
+                  >
+                    <path
+                      d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+                    />
+                  </svg>
+                  GitHub link after push
+                </span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========================================
+           5. PROJECTS SECTION - Grid of Cards
+           ======================================== -->
+      <section class="projects section" id="projects">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-label">Portfolio</span>
+            <h2 class="section-title">Projects</h2>
+          </div>
+
+          <div class="projects-grid" id="projects-grid"></div>
+
+          <!-- Quality Bar Note -->
+          <p class="quality-note reveal">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+              />
+            </svg>
+            <span
+              >Only polished projects appear here. Everything else stays in the
+              <a href="#roadmap">Roadmap</a> until improved.</span
+            >
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           6. ROADMAP SECTION - Timeline
+           ======================================== -->
+      <section class="roadmap section" id="roadmap">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-label">What's Next</span>
+            <h2 class="section-title">Development Roadmap</h2>
+          </div>
+
+          <div class="timeline reveal">
+            <div class="timeline-item">
+              <div class="timeline-marker active"></div>
+              <div class="timeline-content glass-panel">
+                <span class="timeline-phase">Phase 1</span>
+                <h3 class="timeline-title">Ship Secure Auth Starter Kit</h3>
+                <p class="timeline-desc">
+                  Complete authentication boilerplate with OTP, rate limiting,
+                  and security logging.
+                </p>
+                <span class="timeline-status status-progress">In Progress</span>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-marker active"></div>
+              <div class="timeline-content glass-panel">
+                <span class="timeline-phase">Phase 2</span>
+                <h3 class="timeline-title">Linux Automation Toolkit</h3>
+                <p class="timeline-desc">
+                  Publish reusable Bash scripts for system setup, maintenance,
+                  and workflow automation.
+                </p>
+                <span class="timeline-status status-progress">In Progress</span>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-marker"></div>
+              <div class="timeline-content glass-panel">
+                <span class="timeline-phase">Phase 3</span>
+                <h3 class="timeline-title">Refactor Legacy Projects</h3>
+                <p class="timeline-desc">
+                  Review and improve early work (EduSynch) to meet current
+                  quality standards.
+                </p>
+                <span class="timeline-status status-planned">Planned</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Current Focus -->
+          <div class="current-focus glass-panel reveal">
+            <h3 class="focus-title">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+              Current Focus
+            </h3>
+            <ul class="focus-list">
+              <li>
+                Building secure authentication patterns (OTP, rate limiting)
+              </li>
+              <li>Creating practical Linux automation scripts</li>
+              <li>Studying network security fundamentals</li>
+              <li>Shipping polished projects before adding new ones</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           7. WORKFLOW SECTION - How I Work
+           ======================================== -->
+      <section class="workflow section" id="workflow">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-label">Process</span>
+            <h2 class="section-title">How I Work</h2>
+          </div>
+
+          <div class="workflow-grid reveal">
+            <div class="workflow-step glass-panel">
+              <span class="step-number">01</span>
+              <div class="step-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="12" />
+                  <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+              </div>
+              <h3 class="step-title">Define the Problem</h3>
+              <p class="step-desc">
+                Understand what needs solving before writing any code.
+              </p>
+            </div>
+
+            <div class="workflow-step glass-panel">
+              <span class="step-number">02</span>
+              <div class="step-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" />
+                </svg>
+              </div>
+              <h3 class="step-title">Build an MVP</h3>
+              <p class="step-desc">
+                Ship a working version fast, iterate from there.
+              </p>
+            </div>
+
+            <div class="workflow-step glass-panel">
+              <span class="step-number">03</span>
+              <div class="step-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+              </div>
+              <h3 class="step-title">Harden & Test</h3>
+              <p class="step-desc">
+                Add security, error handling, and edge case coverage.
+              </p>
+            </div>
+
+            <div class="workflow-step glass-panel">
+              <span class="step-number">04</span>
+              <div class="step-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"
+                  />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                </svg>
+              </div>
+              <h3 class="step-title">Document & Ship</h3>
+              <p class="step-desc">
+                Write clear docs, deploy, and gather feedback.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           8. GITHUB SPOTLIGHT
+           ======================================== -->
+      <section class="github-spotlight section" id="github">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-label">Open Source</span>
+            <h2 class="section-title">GitHub Spotlight</h2>
+          </div>
+
+          <div class="github-grid reveal">
+            <a
+              href="https://github.com/Chrinux-AI/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="github-card glass-panel"
+            >
+              <div class="github-card-header">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="github-icon"
+                >
+                  <path
+                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+                  />
+                </svg>
+                <span class="github-card-badge">Coming Soon</span>
+              </div>
+              <h3 class="github-card-title">Secure Auth Starter Kit</h3>
+              <p class="github-card-desc">
+                Authentication boilerplate with OTP, rate limiting, and security
+                logging.
+              </p>
+              <div class="github-card-footer">
+                <span class="github-lang"
+                  ><span class="lang-dot php"></span>PHP</span
+                >
+              </div>
+            </a>
+
+            <a
+              href="https://github.com/Chrinux-AI/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="github-card glass-panel"
+            >
+              <div class="github-card-header">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="github-icon"
+                >
+                  <path
+                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+                  />
+                </svg>
+                <span class="github-card-badge">Coming Soon</span>
+              </div>
+              <h3 class="github-card-title">Linux Automation Toolkit</h3>
+              <p class="github-card-desc">
+                Practical Bash scripts for system setup and workflow automation.
+              </p>
+              <div class="github-card-footer">
+                <span class="github-lang"
+                  ><span class="lang-dot bash"></span>Bash</span
+                >
+              </div>
+            </a>
+
+            <a
+              href="https://github.com/Chrinux-AI/Portfolio"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="github-card glass-panel"
+            >
+              <div class="github-card-header">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="github-icon"
+                >
+                  <path
+                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+                  />
+                </svg>
+                <span class="github-card-badge live">Live</span>
+              </div>
+              <h3 class="github-card-title">Portfolio Cyberpunk UI</h3>
+              <p class="github-card-desc">
+                This website — responsive, accessible, cyberpunk-themed
+                portfolio.
+              </p>
+              <div class="github-card-footer">
+                <span class="github-lang"
+                  ><span class="lang-dot js"></span>JavaScript</span
+                >
+              </div>
+            </a>
+          </div>
+
+          <p class="github-note reveal">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="16" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12.01" y2="8" />
+            </svg>
+            <span>Links update as repos are pushed to GitHub.</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           9. CV SECTION - Minimal
+           ======================================== -->
+      <section class="cv-section section" id="cv">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-label">Experience</span>
+            <h2 class="section-title">My CV</h2>
+          </div>
+
+          <div class="cv-card glass-panel reveal">
+            <p class="cv-summary">
+              Motivated developer with a foundation in Linux systems, web
+              development, and cybersecurity fundamentals. Experienced in
+              building practical applications using PHP, MySQL, and JavaScript.
+              Currently pursuing BSc at LAUTECH with focus on secure web systems
+              and automation.
+            </p>
+            <div class="cv-buttons">
+              <a href="cv.html" class="btn btn-primary">
+                <svg
+                  class="btn-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"
+                  />
+                  <polyline points="14 2 14 8 20 8" />
+                </svg>
+                View Full CV
+              </a>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                onclick="window.open('cv.html', '_blank')"
+              >
+                <svg
+                  class="btn-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="6 9 6 2 18 2 18 9" />
+                  <path
+                    d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"
+                  />
+                  <rect x="6" y="14" width="12" height="8" />
+                </svg>
+                Download PDF
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           10. CONTACT SECTION - Enhanced with Form
+           ======================================== -->
+      <section class="contact section" id="contact">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-label">Get In Touch</span>
+            <h2 class="section-title">Let's Connect</h2>
+          </div>
+
+          <div class="contact-layout reveal">
+            <!-- Contact Form -->
+            <div class="contact-form-wrapper glass-panel">
+              <form id="contact-form" class="contact-form" novalidate>
+                <div class="form-group">
+                  <label for="contact-name"
+                    >Your Name <span class="required">*</span></label
+                  >
+                  <input
+                    type="text"
+                    id="contact-name"
+                    name="name"
+                    placeholder="John Doe"
+                    required
+                    minlength="2"
+                  />
+                  <span class="form-error" id="name-error"></span>
+                </div>
+
+                <div class="form-group">
+                  <label for="contact-email"
+                    >Your Email <span class="required">*</span></label
+                  >
+                  <input
+                    type="email"
+                    id="contact-email"
+                    name="email"
+                    placeholder="john@example.com"
+                    required
+                  />
+                  <span class="form-error" id="email-error"></span>
+                </div>
+
+                <div class="form-group">
+                  <label for="contact-message"
+                    >Message <span class="required">*</span></label
+                  >
+                  <textarea
+                    id="contact-message"
+                    name="message"
+                    placeholder="Hi Christopher, I'd like to discuss..."
+                    rows="5"
+                    required
+                    minlength="10"
+                  ></textarea>
+                  <span class="form-error" id="message-error"></span>
+                </div>
+
+                <div
+                  class="form-feedback"
+                  id="composer-feedback"
+                  role="alert"
+                  aria-live="polite"
+                ></div>
+
+                <div class="contact-form-actions">
+                  <button type="button" class="btn btn-primary" id="send-gmail">
+                    <svg
+                      class="btn-icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                      />
+                      <polyline points="22,6 12,13 2,6" />
+                    </svg>
+                    Send via Gmail
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-outline"
+                    id="send-mailto"
+                  >
+                    <svg
+                      class="btn-icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                      />
+                      <polyline points="22,6 12,13 2,6" />
+                    </svg>
+                    Mail App
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    id="copy-email"
+                  >
+                    <svg
+                      class="btn-icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                      <path
+                        d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"
+                      />
+                    </svg>
+                    Copy Email
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Message Preview -->
+            <div class="contact-preview glass-panel">
+              <h3 class="preview-title">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+                Message Preview
+              </h3>
+              <div class="preview-content" id="preview-body">
+                <p class="preview-placeholder">
+                  Fill in the fields to preview your message...
+                </p>
+              </div>
+
+              <div class="contact-links-mini">
+                <a
+                  href="https://www.linkedin.com/in/christopher-olabiyi-6662a0383/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="contact-link-mini"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+                    />
+                  </svg>
+                  LinkedIn
+                </a>
+                <a
+                  href="https://github.com/Chrinux-AI/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="contact-link-mini"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+                    />
+                  </svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ========================================
+         11. FOOTER - Professional Signal
+         ======================================== -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-logo">
+            <span class="logo-bracket">&lt;</span>CODEX<span class="logo-slash"
+              >/</span
+            ><span class="logo-bracket">&gt;</span>
+          </div>
+
+          <div class="footer-links">
+            <a
+              href="https://github.com/Chrinux-AI/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+                />
+              </svg>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/christopher-olabiyi-6662a0383/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+                />
+              </svg>
+            </a>
+            <a href="mailto:christolabiyi35@gmail.com" aria-label="Email">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+            </a>
+          </div>
+
+          <p class="footer-name">Christopher Olabiyi</p>
+          <p class="footer-updated">
+            Last updated: <span id="last-updated">February 2026</span>
+          </p>
+          <p class="footer-copyright">
+            &copy; <span id="current-year">2026</span> CODEX. All rights
+            reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="/js/config.js"></script>
+    <script src="/js/effects.js"></script>
+    <script type="module" src="/js/script.js"></script>
+  </body>
+</html>

@@ -1,16 +1,50 @@
 # CODEX Portfolio
 
-**🔗 Live Site:** [https://chrinux-ai.github.io/Portfolio/](https://chrinux-ai.github.io/Portfolio/)
+**🔗 Live Site:** [https://codex-portfolio.vercel.app](https://codex-portfolio.vercel.app)
 
 A modern cyberpunk-themed portfolio website for **Christopher Olabiyi** (CODEX / Michris).
 
-Built with vanilla HTML, CSS, and JavaScript — optimized for GitHub Pages deployment.
+Built with vanilla HTML, CSS, and JavaScript — optimized for Vercel deployment.
+
+---
 
 ## 🚀 Quick Start
 
-### 1. Configure Your Information
+### Deploy to Vercel
 
-Edit `js/config.js` to update your personal information. Key fields already set:
+1. Push this repo to GitHub
+2. Import the repo in [Vercel Dashboard](https://vercel.com/new)
+3. Configure:
+   - **Framework Preset:** Other
+   - **Build Command:** (leave empty)
+   - **Output Directory:** `public`
+4. Deploy!
+
+### Local Development
+
+```bash
+# Serve locally (any static server)
+npx serve public
+
+# Or use Python
+cd public && python -m http.server 3000
+```
+
+### Generate PNG Icons (optional)
+
+```bash
+# Install librsvg2-bin if needed
+sudo apt install librsvg2-bin
+
+# Generate all PNG sizes
+./generate-icons.sh
+```
+
+---
+
+## ⚙️ Configuration
+
+Edit `public/js/config.js` to update your personal information:
 
 ```javascript
 const CONFIG = {

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 140">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0" stop-color="#00ffff"/>
+      <stop offset="1" stop-color="#00a0ff"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect x="8" y="14" width="504" height="112" rx="18" fill="rgba(255,255,255,0.06)" stroke="rgba(0,255,255,0.25)"/>
+  <text x="34" y="88" font-size="46" font-family="ui-monospace, Menlo, Consolas, monospace"
+        fill="url(#g)" filter="url(#glow)">CODEX</text>
+  <text x="210" y="88" font-size="24" font-family="ui-sans-serif, system-ui, Segoe UI"
+        fill="rgba(233,241,255,0.85)">/ Christopher</text>
+  <path d="M34 102h452" stroke="rgba(0,255,255,0.25)"/>
+</svg>
