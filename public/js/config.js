@@ -140,6 +140,7 @@ export const CONFIG = {
   EMAIL: "christolabiyi35@gmail.com",
   GITHUB_URL: "https://github.com/Chrinux-AI/",
   LINKEDIN_URL: "https://www.linkedin.com/in/christopher-olabiyi-6662a0383/",
+  TWITTER_URL: "https://x.com/christolabiyi35",
 
   // Assets
   HEADSHOT: "./assets/images/headshot.png",
