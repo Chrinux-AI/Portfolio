@@ -2407,7 +2407,8 @@ textarea {
   justify-content: center;
   border-radius: 50%;
   background: color-mix(in srgb, var(--cia-color, #00f0ff) 12%, transparent);
-  border: 1px solid color-mix(in srgb, var(--cia-color, #00f0ff) 30%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--cia-color, #00f0ff) 30%, transparent);
   flex-shrink: 0;
 }
 

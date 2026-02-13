@@ -329,7 +329,8 @@ export const SECURITY_MINDSET = {
 
 // CIA Triad - Core security model
 export const CIA_TRIAD = {
-  intro: "The CIA Triad is the foundation of information security. Every security decision maps back to protecting one or more of these three pillars.",
+  intro:
+    "The CIA Triad is the foundation of information security. Every security decision maps back to protecting one or more of these three pillars.",
   pillars: [
     {
       title: "Confidentiality",
@@ -340,46 +341,67 @@ export const CIA_TRIAD = {
         "Encryption (AES-256, TLS/SSL)",
         "Access control lists (ACL)",
         "Multi-factor authentication (MFA)",
-        "Data classification & handling policies"
+        "Data classification & handling policies",
       ],
-      realWorld: "Encrypting database credentials in .env files instead of hardcoding them. Using bcrypt for password hashing."
+      realWorld:
+        "Encrypting database credentials in .env files instead of hardcoding them. Using bcrypt for password hashing.",
     },
     {
       title: "Integrity",
       icon: "shield-check",
       color: "#a855f7",
-      summary: "Data remains accurate, complete, and unaltered by unauthorized parties.",
+      summary:
+        "Data remains accurate, complete, and unaltered by unauthorized parties.",
       methods: [
         "Hashing (SHA-256, MD5 checksums)",
         "Digital signatures",
         "Input validation & sanitization",
-        "Version control (Git commit signing)"
+        "Version control (Git commit signing)",
       ],
-      realWorld: "Validating and sanitizing all user input server-side. Using prepared statements to prevent SQL injection."
+      realWorld:
+        "Validating and sanitizing all user input server-side. Using prepared statements to prevent SQL injection.",
     },
     {
       title: "Availability",
       icon: "server",
       color: "#ec4899",
-      summary: "Systems and data are accessible when needed by authorized users.",
+      summary:
+        "Systems and data are accessible when needed by authorized users.",
       methods: [
         "Redundancy & backups",
         "DDoS protection",
         "Load balancing",
-        "Disaster recovery planning"
+        "Disaster recovery planning",
       ],
-      realWorld: "Implementing rate limiting to prevent service abuse. Setting up automated backups and monitoring uptime."
-    }
-  ]
+      realWorld:
+        "Implementing rate limiting to prevent service abuse. Setting up automated backups and monitoring uptime.",
+    },
+  ],
 };
 
 // Linux Permissions - File security fundamentals
 export const LINUX_PERMISSIONS = {
-  intro: "Linux file permissions are the first line of defense in system security. Understanding chmod, ownership, and permission bits is essential for any developer working with servers.",
+  intro:
+    "Linux file permissions are the first line of defense in system security. Understanding chmod, ownership, and permission bits is essential for any developer working with servers.",
   permissionBits: [
-    { symbol: "r", value: 4, meaning: "Read", desc: "View file contents or list directory" },
-    { symbol: "w", value: 2, meaning: "Write", desc: "Modify file or create/delete in directory" },
-    { symbol: "x", value: 1, meaning: "Execute", desc: "Run file as program or enter directory" }
+    {
+      symbol: "r",
+      value: 4,
+      meaning: "Read",
+      desc: "View file contents or list directory",
+    },
+    {
+      symbol: "w",
+      value: 2,
+      meaning: "Write",
+      desc: "Modify file or create/delete in directory",
+    },
+    {
+      symbol: "x",
+      value: 1,
+      meaning: "Execute",
+      desc: "Run file as program or enter directory",
+    },
   ],
   commonPermissions: [
     {
@@ -387,50 +409,59 @@ export const LINUX_PERMISSIONS = {
       symbolic: "rwxr-xr-x",
       useCase: "Web directories, scripts",
       breakdown: "Owner: full access | Group & Others: read + execute",
-      tip: "Standard for public web folders and executable scripts."
+      tip: "Standard for public web folders and executable scripts.",
     },
     {
       chmod: "644",
       symbolic: "rw-r--r--",
       useCase: "Config files, HTML/CSS/JS",
       breakdown: "Owner: read + write | Group & Others: read only",
-      tip: "Default for most web files. Others can read but not modify."
+      tip: "Default for most web files. Others can read but not modify.",
     },
     {
       chmod: "700",
       symbolic: "rwx------",
       useCase: "Private scripts, SSH keys dir",
       breakdown: "Owner: full access | Group & Others: no access",
-      tip: "Use for sensitive scripts and ~/.ssh directory."
+      tip: "Use for sensitive scripts and ~/.ssh directory.",
     },
     {
       chmod: "600",
       symbolic: "rw-------",
       useCase: ".env files, private keys",
       breakdown: "Owner: read + write | Group & Others: no access",
-      tip: "Critical for SSH private keys and environment files with secrets."
+      tip: "Critical for SSH private keys and environment files with secrets.",
     },
     {
       chmod: "444",
       symbolic: "r--r--r--",
       useCase: "Read-only configs, logs",
       breakdown: "Everyone: read only",
-      tip: "Prevents accidental modification. Good for production configs."
+      tip: "Prevents accidental modification. Good for production configs.",
     },
     {
       chmod: "000",
       symbolic: "----------",
       useCase: "Locked files",
       breakdown: "No access for anyone (except root)",
-      tip: "Nuclear option — only root can access. Use sparingly."
-    }
+      tip: "Nuclear option — only root can access. Use sparingly.",
+    },
   ],
   ownershipExamples: [
-    { command: "chown www-data:www-data /var/www/html", desc: "Set web server as owner of web root" },
-    { command: "chown -R $USER:$USER ~/projects", desc: "Recursively own your project directory" },
+    {
+      command: "chown www-data:www-data /var/www/html",
+      desc: "Set web server as owner of web root",
+    },
+    {
+      command: "chown -R $USER:$USER ~/projects",
+      desc: "Recursively own your project directory",
+    },
     { command: "chmod +x script.sh", desc: "Make a script executable" },
-    { command: "chmod -R 755 public/", desc: "Set standard web permissions recursively" }
-  ]
+    {
+      command: "chmod -R 755 public/",
+      desc: "Set standard web permissions recursively",
+    },
+  ],
 };
 
 // Make CONFIG available globally for backward compatibility

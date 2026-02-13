@@ -1130,9 +1130,7 @@
     grid.innerHTML = triad.pillars
       .map((pillar) => {
         const iconSvg = icons[pillar.icon] || icons.lock;
-        const methodsHtml = pillar.methods
-          .map((m) => `<li>${m}</li>`)
-          .join("");
+        const methodsHtml = pillar.methods.map((m) => `<li>${m}</li>`).join("");
 
         return `
           <article class="cia-card glass-panel" style="--cia-color: ${pillar.color}">

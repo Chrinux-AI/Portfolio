@@ -31,26 +31,9 @@
     <style>
       /* ========================================
          CV PAGE - Modern Dark Theme
+         All colors hardcoded (no CSS variables)
+         so html2canvas renders correctly.
          ======================================== */
-
-      :root {
-        --cv-bg: #0b0f17;
-        --cv-surface: #111827;
-        --cv-card: #1a2234;
-        --cv-border: rgba(255, 255, 255, 0.08);
-        --cv-text: #e5e7eb;
-        --cv-text-muted: #9ca3af;
-        --cv-text-dim: #6b7280;
-        --cv-accent-cyan: #00d4ff;
-        --cv-accent-purple: #a855f7;
-        --cv-accent-pink: #ec4899;
-        --cv-gradient: linear-gradient(
-          135deg,
-          #00d4ff 0%,
-          #a855f7 50%,
-          #ec4899 100%
-        );
-      }
 
       * {
         margin: 0;
@@ -71,8 +54,8 @@
           BlinkMacSystemFont,
           "Segoe UI",
           sans-serif;
-        background: var(--cv-bg);
-        color: var(--cv-text);
+        background: #0b0f17;
+        color: #e5e7eb;
         line-height: 1.6;
         min-height: 100vh;
       }
@@ -81,7 +64,7 @@
       .cv-page {
         min-height: 100vh;
         padding: 48px 24px;
-        background: var(--cv-bg);
+        background: #0b0f17;
       }
 
       .cv-container {
@@ -96,14 +79,14 @@
         align-items: center;
         margin-bottom: 32px;
         padding-bottom: 20px;
-        border-bottom: 1px solid var(--cv-border);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       }
 
       .cv-back {
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        color: var(--cv-text-muted);
+        color: #9ca3af;
         font-size: 0.875rem;
         font-weight: 500;
         text-decoration: none;
@@ -111,7 +94,7 @@
       }
 
       .cv-back:hover {
-        color: var(--cv-accent-cyan);
+        color: #00d4ff;
       }
 
       .cv-back svg {
@@ -124,7 +107,7 @@
         align-items: center;
         gap: 8px;
         padding: 12px 24px;
-        background: var(--cv-gradient);
+        background: linear-gradient(135deg, #00d4ff 0%, #a855f7 50%, #ec4899 100%);
         color: #fff;
         font-size: 0.875rem;
         font-weight: 600;
@@ -148,8 +131,8 @@
 
       /* CV Document Card */
       .cv-document {
-        background: var(--cv-surface);
-        border: 1px solid var(--cv-border);
+        background: #111827;
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 16px;
         overflow: hidden;
         position: relative;
@@ -163,7 +146,7 @@
         left: 0;
         right: 0;
         height: 4px;
-        background: var(--cv-gradient);
+        background: linear-gradient(135deg, #00d4ff 0%, #a855f7 50%, #ec4899 100%);
       }
 
       .cv-document-inner {
@@ -175,7 +158,7 @@
         text-align: center;
         margin-bottom: 40px;
         padding-bottom: 32px;
-        border-bottom: 1px solid var(--cv-border);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       }
 
       .cv-doc-name {
@@ -190,14 +173,14 @@
         font-family: "Fira Code", monospace;
         font-size: 0.95rem;
         margin-bottom: 12px;
-        background: var(--cv-gradient);
+        background: linear-gradient(135deg, #00d4ff 0%, #a855f7 50%, #ec4899 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
       }
 
       .cv-doc-title {
-        color: var(--cv-text-muted);
+        color: #9ca3af;
         font-size: 1.05rem;
         font-weight: 400;
         margin-bottom: 24px;
@@ -214,14 +197,14 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        color: var(--cv-text-dim);
+        color: #6b7280;
         font-size: 0.85rem;
         text-decoration: none;
         transition: color 0.2s ease;
       }
 
       .cv-doc-link:hover {
-        color: var(--cv-accent-cyan);
+        color: #00d4ff;
       }
 
       .cv-doc-link svg {
@@ -246,8 +229,8 @@
         letter-spacing: 0.15em;
         margin-bottom: 20px;
         padding-bottom: 12px;
-        border-bottom: 1px solid var(--cv-border);
-        background: var(--cv-gradient);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        background: linear-gradient(135deg, #00d4ff 0%, #a855f7 50%, #ec4899 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -255,7 +238,7 @@
 
       /* Summary */
       .cv-summary-text {
-        color: var(--cv-text);
+        color: #e5e7eb;
         font-size: 0.95rem;
         line-height: 1.8;
       }
@@ -268,8 +251,8 @@
       }
 
       .cv-skill-group {
-        background: var(--cv-card);
-        border: 1px solid var(--cv-border);
+        background: #1a2234;
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 12px;
         padding: 20px;
       }
@@ -288,21 +271,21 @@
         content: "";
         width: 8px;
         height: 8px;
-        background: var(--cv-gradient);
+        background: linear-gradient(135deg, #00d4ff 0%, #a855f7 50%, #ec4899 100%);
         border-radius: 50%;
         flex-shrink: 0;
       }
 
       .cv-skill-list {
-        color: var(--cv-text-muted);
+        color: #9ca3af;
         font-size: 0.85rem;
         line-height: 1.9;
       }
 
       /* Projects */
       .cv-project {
-        background: var(--cv-card);
-        border: 1px solid var(--cv-border);
+        background: #1a2234;
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 12px;
         padding: 24px;
         margin-bottom: 16px;
@@ -329,7 +312,7 @@
       .cv-project-tech {
         font-family: "Fira Code", monospace;
         font-size: 0.75rem;
-        color: var(--cv-accent-purple);
+        color: #a855f7;
         background: rgba(168, 85, 247, 0.1);
         padding: 4px 10px;
         border-radius: 4px;
@@ -342,7 +325,7 @@
       }
 
       .cv-project-bullets li {
-        color: var(--cv-text-muted);
+        color: #9ca3af;
         font-size: 0.875rem;
         line-height: 1.7;
         margin-bottom: 6px;
@@ -353,13 +336,13 @@
       }
 
       .cv-project-bullets li::marker {
-        color: var(--cv-accent-cyan);
+        color: #00d4ff;
       }
 
       /* Education */
       .cv-education-card {
-        background: var(--cv-card);
-        border: 1px solid var(--cv-border);
+        background: #1a2234;
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 12px;
         padding: 24px;
       }
@@ -379,20 +362,20 @@
       }
 
       .cv-education-institution {
-        color: var(--cv-text-muted);
+        color: #9ca3af;
         font-size: 0.875rem;
         margin-bottom: 4px;
       }
 
       .cv-education-track {
-        color: var(--cv-text-dim);
+        color: #6b7280;
         font-size: 0.8rem;
       }
 
       .cv-education-status {
         font-family: "Fira Code", monospace;
         font-size: 0.75rem;
-        color: var(--cv-accent-cyan);
+        color: #00d4ff;
         background: rgba(0, 212, 255, 0.1);
         padding: 4px 10px;
         border-radius: 4px;
@@ -409,9 +392,9 @@
       .cv-interest-tag {
         padding: 8px 14px;
         font-size: 0.8rem;
-        color: var(--cv-text-muted);
-        background: var(--cv-card);
-        border: 1px solid var(--cv-border);
+        color: #9ca3af;
+        background: #1a2234;
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 6px;
       }
 
@@ -509,10 +492,10 @@
         left: 50%;
         transform: translateX(-50%) translateY(100px);
         padding: 14px 24px;
-        background: var(--cv-card);
-        border: 1px solid var(--cv-border);
+        background: #1a2234;
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 8px;
-        color: var(--cv-text);
+        color: #e5e7eb;
         font-size: 0.875rem;
         font-weight: 500;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
@@ -566,17 +549,17 @@
         gap: 6px;
         padding: 10px 16px;
         background: transparent;
-        color: var(--cv-text-muted);
+        color: #9ca3af;
         font-size: 0.8rem;
         font-weight: 500;
-        border: 1px solid var(--cv-border);
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 6px;
         cursor: pointer;
         transition: all 0.2s ease;
       }
 
       .cv-print-btn:hover {
-        color: var(--cv-accent-cyan);
+        color: #00d4ff;
         border-color: rgba(0, 212, 255, 0.3);
         background: rgba(0, 212, 255, 0.05);
       }
@@ -669,7 +652,7 @@
                 </p>
 
                 <nav class="cv-doc-links" aria-label="Contact links">
-                  <a href="mailto:codexmichris@gmail.com" class="cv-doc-link">
+                  <a href="mailto:christolabiyi35@gmail.com" class="cv-doc-link">
                     <svg
                       viewBox="0 0 24 24"
                       fill="none"
