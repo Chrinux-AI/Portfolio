@@ -1,11 +1,17 @@
 /**
  * CV PDF Export
  * =============
- * Automatic PDF download with dark theme preservation.
+ * Automatic dark-themed PDF download — no print dialog.
  * Uses html2pdf.js (lazy-loaded on first click).
  *
- * Strategy: clone #cvRoot, strip every <svg> from the clone,
- * render offscreen, then download. The original DOM is never touched.
+ * Root-cause of previous blank PDFs:
+ *   1. html2canvas CANNOT parse radial-gradient() on #cvRoot → transparent bg
+ *   2. html2canvas CANNOT do -webkit-background-clip: text → invisible text
+ *   3. SVG elements crash html2canvas with "Unsupported image type"
+ *
+ * Fix: hide SVGs on the live DOM, then use the `onclone` callback to
+ * solidify all backgrounds and fix gradient-text in html2canvas's own
+ * internal clone BEFORE it renders the canvas.
  */
 
 (function () {
@@ -34,8 +40,8 @@
         '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>',
       info: '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
     };
-    var svg = toast.querySelector("svg");
-    if (svg) svg.innerHTML = icons[type] || icons.info;
+    var svgEl = toast.querySelector("svg");
+    if (svgEl) svgEl.innerHTML = icons[type] || icons.info;
     toast.className = "cv-toast " + (type || "info");
     toastMsg.textContent = msg;
     toast.classList.add("show");
@@ -51,7 +57,6 @@
       var s = document.createElement("script");
       s.src = url;
       s.onload = function () {
-        // Give the library a moment to initialize its globals
         setTimeout(ok, 300);
       };
       s.onerror = fail;
@@ -62,57 +67,50 @@
   function ensureLib() {
     if (window.html2pdf) return Promise.resolve();
     return addScript(
-      "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
     ).catch(function () {
       return addScript(
-        "https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js",
+        "https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"
       );
     });
   }
 
-  /* ── Compute all styles for an element (for accurate cloning) ── */
-  function inlineComputedStyles(sourceEl, targetEl) {
-    var computed = getComputedStyle(sourceEl);
-    var importantProps = [
-      "color",
-      "background-color",
-      "background",
-      "background-image",
-      "font-family",
-      "font-size",
-      "font-weight",
-      "line-height",
-      "letter-spacing",
-      "text-transform",
-      "padding",
-      "margin",
-      "border",
-      "border-radius",
-      "display",
-      "flex-direction",
-      "justify-content",
-      "align-items",
-      "gap",
-      "grid-template-columns",
-      "width",
-      "max-width",
-      "text-align",
-      "white-space",
-      "overflow",
-      "position",
-      "box-sizing",
-      "-webkit-text-fill-color",
-      "-webkit-background-clip",
-      "background-clip",
-    ];
-    importantProps.forEach(function (prop) {
-      try {
-        var val = computed.getPropertyValue(prop);
-        if (val) targetEl.style.setProperty(prop, val);
-      } catch (e) {
-        /* skip */
-      }
-    });
+  /* ── Fix html2canvas's internal clone before it renders ─── */
+  function onCloneFix(clonedDoc) {
+    var root = clonedDoc.getElementById("cvRoot");
+    if (!root) return;
+
+    // ── Inject a <style> block to override things html2canvas can't handle ──
+    var patch = clonedDoc.createElement("style");
+    patch.textContent = [
+      // Kill the radial-gradient on #cvRoot (html2canvas can't parse it)
+      "#cvRoot { background: #0b0f17 !important; }",
+
+      // Kill gradient-text (background-clip:text is unsupported)
+      ".cv-section-title, .cv-doc-handles {",
+      "  background: none !important;",
+      "  background-image: none !important;",
+      "  -webkit-background-clip: initial !important;",
+      "  background-clip: initial !important;",
+      "  -webkit-text-fill-color: #00d4ff !important;",
+      "  color: #00d4ff !important;",
+      "}",
+
+      // Solid background for the document card
+      ".cv-document { background: #111827 !important; }",
+
+      // Flatten the ::before gradient bar to a solid color
+      ".cv-document::before { background: #00d4ff !important; }",
+
+      // Cards
+      ".cv-skill-group, .cv-project, .cv-education-card, .cv-interest-tag {",
+      "  background: #1a2234 !important;",
+      "}",
+
+      // Kill all animations
+      "* { animation: none !important; transition: none !important; }",
+    ].join("\n");
+    clonedDoc.head.appendChild(patch);
   }
 
   /* ── Download handler ───────────────────────────────────── */
@@ -125,52 +123,22 @@
     downloadBtn.disabled = true;
     showToast("Generating PDF… please wait", "info");
 
-    // Disable animations
+    // Disable CSS animations on the live page
     document.body.classList.add("exporting");
+
+    // Step 1: Hide every SVG inside #cvRoot so html2canvas never sees them
+    var hiddenSvgs = [];
+    var allSvgs = cvRoot.querySelectorAll("svg");
+    for (var i = 0; i < allSvgs.length; i++) {
+      var svg = allSvgs[i];
+      var prev = svg.style.display;
+      svg.style.setProperty("display", "none", "important");
+      hiddenSvgs.push({ el: svg, prev: prev });
+    }
 
     ensureLib()
       .then(function () {
         if (!window.html2pdf) throw new Error("Library did not load");
-
-        // ★ STRATEGY: Deep-clone #cvRoot, strip every <svg>,
-        //   position offscreen, render, then remove.
-        var clone = cvRoot.cloneNode(true);
-
-        // Remove every SVG element from the clone
-        var svgs = clone.querySelectorAll("svg");
-        for (var i = svgs.length - 1; i >= 0; i--) {
-          svgs[i].parentNode.removeChild(svgs[i]);
-        }
-
-        // Also remove any elements with background-image that might use SVG
-        var allImgs = clone.querySelectorAll('img[src$=".svg"]');
-        for (var j = allImgs.length - 1; j >= 0; j--) {
-          allImgs[j].parentNode.removeChild(allImgs[j]);
-        }
-
-        // Fix gradient text rendering: inline the gradient text colors
-        // because the clone loses CSS variable context
-        var gradientTexts = clone.querySelectorAll(
-          ".cv-section-title, .cv-doc-handles",
-        );
-        for (var k = 0; k < gradientTexts.length; k++) {
-          gradientTexts[k].style.setProperty("background", "none", "important");
-          gradientTexts[k].style.setProperty(
-            "-webkit-text-fill-color",
-            "#00d4ff",
-            "important",
-          );
-          gradientTexts[k].style.setProperty("color", "#00d4ff", "important");
-        }
-
-        // Position the clone offscreen but visible (html2canvas needs it visible)
-        clone.style.position = "fixed";
-        clone.style.left = "-9999px";
-        clone.style.top = "0";
-        clone.style.width = cvRoot.offsetWidth + "px";
-        clone.style.zIndex = "-1";
-        clone.style.background = "#0b0f17";
-        document.body.appendChild(clone);
 
         var opt = {
           margin: [6, 6, 6, 6],
@@ -178,14 +146,15 @@
           image: { type: "jpeg", quality: 0.95 },
           html2canvas: {
             scale: 2,
-            logging: false,
+            logging: true,
             backgroundColor: "#0b0f17",
             letterRendering: true,
-            useCORS: false,
+            useCORS: true,
             allowTaint: true,
-            foreignObjectRendering: false,
-            removeContainer: true,
-            imageTimeout: 0,
+            // ★ THE KEY FIX — onclone runs on html2canvas's internal clone
+            // BEFORE it renders. We override radial-gradients & clip-text
+            // with solid colors so html2canvas can actually render them.
+            onclone: onCloneFix,
           },
           jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
           pagebreak: {
@@ -199,21 +168,8 @@
           },
         };
 
-        // Render from the SVG-free clone
-        return window
-          .html2pdf()
-          .set(opt)
-          .from(clone)
-          .save()
-          .then(function () {
-            // Cleanup: remove the offscreen clone
-            if (clone.parentNode) clone.parentNode.removeChild(clone);
-          })
-          .catch(function (err) {
-            // Cleanup even on error
-            if (clone.parentNode) clone.parentNode.removeChild(clone);
-            throw err;
-          });
+        // Step 2: Render directly from #cvRoot (SVGs hidden, onclone fixes rest)
+        return window.html2pdf().set(opt).from(cvRoot).save();
       })
       .then(function () {
         showToast("CV downloaded successfully!", "success");
@@ -221,12 +177,22 @@
       .catch(function (err) {
         console.error("PDF export failed:", err);
         showToast("Opening print dialog as fallback…", "error");
-        // Fallback to reliable browser Print → Save as PDF
         setTimeout(function () {
           window.print();
         }, 1500);
       })
       .finally(function () {
+        // Step 3: Restore all SVGs
+        for (var j = 0; j < hiddenSvgs.length; j++) {
+          var item = hiddenSvgs[j];
+          if (item.prev) {
+            item.el.style.display = item.prev;
+          } else {
+            item.el.style.removeProperty("display");
+          }
+        }
+        hiddenSvgs = [];
+
         document.body.classList.remove("exporting");
         downloadBtn.classList.remove("loading");
         downloadBtn.disabled = false;
@@ -245,11 +211,9 @@
 
   /* ── Auto-download via hash (from index.html link) ──────── */
   if (window.location.hash === "#auto-download") {
-    // Clear hash to prevent re-triggering on refresh
     if (history.replaceState) {
       history.replaceState(null, "", window.location.pathname);
     }
-    // Wait for full page render before auto-triggering
     setTimeout(downloadPDF, 2000);
   }
 })();
