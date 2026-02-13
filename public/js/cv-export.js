@@ -62,10 +62,10 @@
   function ensureLib() {
     if (window.html2pdf) return Promise.resolve();
     return addScript(
-      "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+      "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js",
     ).catch(function () {
       return addScript(
-        "https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"
+        "https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js",
       );
     });
   }
@@ -151,14 +151,14 @@
         // Fix gradient text rendering: inline the gradient text colors
         // because the clone loses CSS variable context
         var gradientTexts = clone.querySelectorAll(
-          ".cv-section-title, .cv-doc-handles"
+          ".cv-section-title, .cv-doc-handles",
         );
         for (var k = 0; k < gradientTexts.length; k++) {
           gradientTexts[k].style.setProperty("background", "none", "important");
           gradientTexts[k].style.setProperty(
             "-webkit-text-fill-color",
             "#00d4ff",
-            "important"
+            "important",
           );
           gradientTexts[k].style.setProperty("color", "#00d4ff", "important");
         }

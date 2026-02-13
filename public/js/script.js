@@ -1442,17 +1442,27 @@
 
     // Show feedback message
     function showFeedback(message, type) {
+      const icons = {
+        error:
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+        success:
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+      };
+
       feedbackEl.innerHTML = `
         <div class="feedback-message feedback-${type}">
-          ${type === "error" ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>' : ""}
+          ${icons[type] || ""}
           <span>${message}</span>
         </div>
       `;
 
-      // Auto-clear after 4 seconds
-      setTimeout(() => {
-        feedbackEl.innerHTML = "";
-      }, 4000);
+      // Auto-clear after 5 seconds (longer for success so user can read)
+      setTimeout(
+        () => {
+          feedbackEl.innerHTML = "";
+        },
+        type === "success" ? 6000 : 4000,
+      );
     }
 
     // Build email body template
@@ -1471,18 +1481,67 @@ ${message}
 Reply to: ${email}`;
     }
 
-    // Open Gmail Compose
-    function openGmailCompose() {
+    // Send email via serverless API
+    async function sendViaAPI() {
       const errors = validateFields();
       if (errors.length > 0) {
         showFeedback(errors.join(". "), "error");
         return;
       }
 
-      const body = buildEmailBody();
-      const gmailURL = `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(recipientEmail)}&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(body)}`;
+      // Show loading state
+      gmailBtn.disabled = true;
+      gmailBtn.classList.add("btn-loading");
+      const originalText = gmailBtn.innerHTML;
+      gmailBtn.innerHTML = `
+        <svg class="btn-spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10" opacity="0.25"/>
+          <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/>
+        </svg>
+        Sending…
+      `;
 
-      window.open(gmailURL, "_blank");
+      try {
+        const response = await fetch("/api/send-email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: nameInput.value.trim(),
+            email: emailInput.value.trim(),
+            message: messageInput.value.trim(),
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          showFeedback(
+            "Message sent successfully! I'll get back to you soon.",
+            "success",
+          );
+          showNeonToast("✓ Email sent!");
+          // Clear form
+          nameInput.value = "";
+          emailInput.value = "";
+          messageInput.value = "";
+          updatePreview();
+        } else {
+          showFeedback(
+            data.error || "Failed to send. Try the Mail App button instead.",
+            "error",
+          );
+        }
+      } catch (err) {
+        console.error("Send failed:", err);
+        showFeedback(
+          "Network error. Try the Mail App button or copy the email address.",
+          "error",
+        );
+      } finally {
+        gmailBtn.disabled = false;
+        gmailBtn.classList.remove("btn-loading");
+        gmailBtn.innerHTML = originalText;
+      }
     }
 
     // Open Mailto
@@ -1552,7 +1611,7 @@ Reply to: ${email}`;
     emailInput.addEventListener("input", updatePreview);
     messageInput.addEventListener("input", updatePreview);
 
-    gmailBtn.addEventListener("click", openGmailCompose);
+    gmailBtn.addEventListener("click", sendViaAPI);
     mailtoBtn.addEventListener("click", openMailto);
     copyBtn.addEventListener("click", copyEmail);
   }

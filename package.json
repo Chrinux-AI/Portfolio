@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "Christopher Olabiyi — Cyberpunk Portfolio",
+  "dependencies": {
+    "nodemailer": "^6.9.0"
+  }
+}
