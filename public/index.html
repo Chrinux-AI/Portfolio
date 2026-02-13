@@ -380,6 +380,49 @@
             role="list"
             aria-label="Security principles"
           ></div>
+
+          <!-- CIA Triad -->
+          <div class="cia-triad-section reveal" id="ciaTriad">
+            <div class="subsection-header">
+              <span class="subsection-label">Core Model</span>
+              <h3 class="subsection-title">The CIA Triad</h3>
+              <p class="subsection-desc" id="ciaIntro"></p>
+            </div>
+            <div class="cia-grid" id="ciaGrid"></div>
+          </div>
+
+          <!-- Linux Permissions -->
+          <div class="linux-perms-section reveal" id="linuxPerms">
+            <div class="subsection-header">
+              <span class="subsection-label">Linux Fundamentals</span>
+              <h3 class="subsection-title">File Permissions &amp; chmod</h3>
+              <p class="subsection-desc" id="permsIntro"></p>
+            </div>
+
+            <!-- Permission bits legend -->
+            <div class="perms-bits-legend" id="permsBitsLegend"></div>
+
+            <!-- Common permissions table -->
+            <div class="perms-table-wrap">
+              <table class="perms-table" id="permsTable">
+                <thead>
+                  <tr>
+                    <th>chmod</th>
+                    <th>Symbolic</th>
+                    <th>Use Case</th>
+                    <th>Breakdown</th>
+                  </tr>
+                </thead>
+                <tbody id="permsTableBody"></tbody>
+              </table>
+            </div>
+
+            <!-- Quick commands -->
+            <div class="perms-commands" id="permsCommands">
+              <h4 class="perms-commands-title">Quick Reference</h4>
+              <div class="perms-commands-grid" id="permsCommandsGrid"></div>
+            </div>
+          </div>
         </div>
       </section>
 

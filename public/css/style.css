@@ -2314,6 +2314,415 @@ textarea {
 }
 
 /* ========================================
+   CIA TRIAD SECTION
+   ======================================== */
+.cia-triad-section,
+.linux-perms-section {
+  margin-top: 60px;
+}
+
+.subsection-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.subsection-label {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--cyan);
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+
+.subsection-title {
+  font-size: clamp(22px, 3vw, 28px);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 10px;
+}
+
+.subsection-desc {
+  font-size: 15px;
+  color: var(--text-secondary);
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* CIA Grid */
+.cia-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.cia-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.cia-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--cia-color, var(--cyan));
+  opacity: 0.8;
+}
+
+.cia-card:hover {
+  border-color: var(--cia-color, rgba(0, 255, 255, 0.3));
+  transform: translateY(-4px);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.4),
+    0 0 20px color-mix(in srgb, var(--cia-color, #00f0ff) 15%, transparent);
+}
+
+.cia-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.cia-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--cia-color, #00f0ff) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--cia-color, #00f0ff) 30%, transparent);
+  flex-shrink: 0;
+}
+
+.cia-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--cia-color, var(--cyan));
+}
+
+.cia-card-title {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--cia-color, var(--text-primary));
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+.cia-summary {
+  font-size: 15px;
+  color: var(--text-primary);
+  margin: 0 0 18px;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.cia-methods {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 18px;
+}
+
+.cia-methods li {
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding: 5px 0 5px 20px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.cia-methods li::before {
+  content: "›";
+  position: absolute;
+  left: 4px;
+  color: var(--cia-color, var(--cyan));
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.cia-real-world {
+  font-size: 13px;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 2px solid var(--cia-color, var(--cyan));
+  padding: 10px 14px;
+  border-radius: 0 8px 8px 0;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.cia-real-world strong {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+/* ========================================
+   LINUX PERMISSIONS SECTION
+   ======================================== */
+
+/* Permission bits legend */
+.perms-bits-legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.perm-bit {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px 20px;
+  min-width: 200px;
+  transition: all var(--transition-normal);
+}
+
+.perm-bit:hover {
+  border-color: rgba(0, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.perm-bit-symbol {
+  font-family: var(--font-mono);
+  font-size: 28px;
+  font-weight: 800;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.perm-bit-symbol.read {
+  color: #00d4ff;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.25);
+}
+
+.perm-bit-symbol.write {
+  color: #a855f7;
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+}
+
+.perm-bit-symbol.execute {
+  color: #ec4899;
+  background: rgba(236, 72, 153, 0.1);
+  border: 1px solid rgba(236, 72, 153, 0.25);
+}
+
+.perm-bit-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.perm-bit-name {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.perm-bit-value {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.perm-bit-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* Permissions table */
+.perms-table-wrap {
+  overflow-x: auto;
+  margin-bottom: 32px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+}
+
+.perms-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.perms-table thead {
+  background: rgba(0, 240, 255, 0.05);
+}
+
+.perms-table th {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--cyan);
+  padding: 14px 18px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+  font-weight: 600;
+}
+
+.perms-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+  vertical-align: top;
+}
+
+.perms-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.perms-table tbody tr:hover {
+  background: rgba(0, 240, 255, 0.03);
+}
+
+.chmod-code {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--cyan);
+  background: rgba(0, 240, 255, 0.08);
+  padding: 3px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  display: inline-block;
+}
+
+.symbolic-code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-primary);
+  letter-spacing: 0.05em;
+}
+
+.perm-usecase {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.perm-breakdown {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.perm-tip {
+  display: none;
+}
+
+/* Quick commands */
+.perms-commands {
+  margin-top: 8px;
+}
+
+.perms-commands-title {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 16px;
+  text-align: center;
+}
+
+.perms-commands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.perm-cmd {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  transition: all var(--transition-normal);
+}
+
+.perm-cmd:hover {
+  border-color: rgba(0, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.perm-cmd-code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--cyan);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 8px 12px;
+  border-radius: 6px;
+  display: block;
+  margin-bottom: 8px;
+  word-break: break-all;
+  border: 1px solid rgba(0, 240, 255, 0.08);
+}
+
+.perm-cmd-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cia-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .perms-bits-legend {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .perm-bit {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .perms-table {
+    font-size: 13px;
+  }
+
+  .perms-table th,
+  .perms-table td {
+    padding: 10px 12px;
+  }
+
+  .perms-commands-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================
    CV PDF EXPORT STYLES
    ======================================== */
 

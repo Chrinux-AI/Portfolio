@@ -1108,6 +1108,123 @@
   }
 
   // ========================================
+  // CIA TRIAD GENERATION
+  // ========================================
+  function generateCIATriad() {
+    const introEl = document.getElementById("ciaIntro");
+    const grid = document.getElementById("ciaGrid");
+    if (!grid || !window.CIA_TRIAD) return;
+
+    const triad = window.CIA_TRIAD;
+
+    if (introEl && triad.intro) {
+      introEl.textContent = triad.intro;
+    }
+
+    const icons = {
+      lock: `<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>`,
+      "shield-check": `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>`,
+      server: `<rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>`,
+    };
+
+    grid.innerHTML = triad.pillars
+      .map((pillar) => {
+        const iconSvg = icons[pillar.icon] || icons.lock;
+        const methodsHtml = pillar.methods
+          .map((m) => `<li>${m}</li>`)
+          .join("");
+
+        return `
+          <article class="cia-card glass-panel" style="--cia-color: ${pillar.color}">
+            <div class="cia-card-header">
+              <div class="cia-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  ${iconSvg}
+                </svg>
+              </div>
+              <h4 class="cia-card-title">${pillar.title}</h4>
+            </div>
+            <p class="cia-summary">${pillar.summary}</p>
+            <ul class="cia-methods">${methodsHtml}</ul>
+            <p class="cia-real-world"><strong>In Practice:</strong> ${pillar.realWorld}</p>
+          </article>
+        `;
+      })
+      .join("");
+  }
+
+  // ========================================
+  // LINUX PERMISSIONS GENERATION
+  // ========================================
+  function generateLinuxPermissions() {
+    const introEl = document.getElementById("permsIntro");
+    const legendEl = document.getElementById("permsBitsLegend");
+    const tbodyEl = document.getElementById("permsTableBody");
+    const cmdGridEl = document.getElementById("permsCommandsGrid");
+
+    if (!window.LINUX_PERMISSIONS) return;
+    const perms = window.LINUX_PERMISSIONS;
+
+    if (introEl && perms.intro) {
+      introEl.textContent = perms.intro;
+    }
+
+    // Permission bits legend
+    if (legendEl && perms.permissionBits) {
+      const bitClasses = { r: "read", w: "write", x: "execute" };
+      legendEl.innerHTML = perms.permissionBits
+        .map(
+          (bit) => `
+          <div class="perm-bit">
+            <span class="perm-bit-symbol ${bitClasses[bit.symbol] || ""}">${bit.symbol}</span>
+            <div class="perm-bit-info">
+              <span class="perm-bit-name">${bit.meaning}</span>
+              <span class="perm-bit-value">Octal value: ${bit.value}</span>
+              <span class="perm-bit-desc">${bit.desc}</span>
+            </div>
+          </div>
+        `,
+        )
+        .join("");
+    }
+
+    // Permissions table
+    if (tbodyEl && perms.commonPermissions) {
+      tbodyEl.innerHTML = perms.commonPermissions
+        .map(
+          (p) => `
+          <tr>
+            <td><span class="chmod-code">${p.chmod}</span></td>
+            <td><code class="symbolic-code">${p.symbolic}</code></td>
+            <td>
+              <span class="perm-usecase">${p.useCase}</span>
+            </td>
+            <td>
+              <span>${p.breakdown}</span>
+              <div class="perm-breakdown">${p.tip}</div>
+            </td>
+          </tr>
+        `,
+        )
+        .join("");
+    }
+
+    // Quick commands
+    if (cmdGridEl && perms.ownershipExamples) {
+      cmdGridEl.innerHTML = perms.ownershipExamples
+        .map(
+          (ex) => `
+          <div class="perm-cmd">
+            <code class="perm-cmd-code">$ ${ex.command}</code>
+            <p class="perm-cmd-desc">${ex.desc}</p>
+          </div>
+        `,
+        )
+        .join("");
+    }
+  }
+
+  // ========================================
   // PROJECTS GENERATION (Simplified)
   // ========================================
   function generateProjects(config) {
@@ -1648,6 +1765,8 @@ Reply to: ${email}`;
       generateCaseStudies();
       generateEnvironment();
       generateSecurityMindset();
+      generateCIATriad();
+      generateLinuxPermissions();
       generateCVSkills(config);
       generateProjects(config);
       initTypingAnimation(config);

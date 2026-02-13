@@ -29,9 +29,11 @@
   function showToast(msg, type) {
     if (!toast || !toastMsg) return;
     var icons = {
-      success: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
-      error: '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>',
-      info: '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>'
+      success:
+        '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
+      error:
+        '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>',
+      info: '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
     };
     var svg = toast.querySelector("svg");
     if (svg) svg.innerHTML = icons[type] || icons.info;
@@ -58,10 +60,10 @@
   function ensureLib() {
     if (window.html2pdf) return Promise.resolve();
     return addScript(
-      "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+      "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js",
     ).catch(function () {
       return addScript(
-        "https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"
+        "https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js",
       );
     });
   }
@@ -98,7 +100,7 @@
             //   never tries to parse them (no "Unsupported image type")
             ignoreElements: function (el) {
               return el.tagName === "svg" || el.tagName === "SVG";
-            }
+            },
           },
           jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
           pagebreak: {
@@ -107,9 +109,9 @@
               ".cv-section",
               ".cv-project",
               ".cv-skill-group",
-              ".cv-education-card"
-            ]
-          }
+              ".cv-education-card",
+            ],
+          },
         };
 
         // Render directly from #cvRoot — no cloning, no DOM mutation
