@@ -1,17 +1,11 @@
 /**
- * CV PDF Export
- * =============
- * Automatic dark-themed PDF download — no print dialog.
- * Uses html2pdf.js (lazy-loaded on first click).
+ * CV PDF Export — Programmatic jsPDF Renderer
+ * =============================================
+ * Builds the PDF entirely via jsPDF drawing API.
+ * NO html2canvas. NO print dialog. NO blank pages. Ever.
  *
- * Root-cause of previous blank PDFs:
- *   1. html2canvas CANNOT parse radial-gradient() on #cvRoot → transparent bg
- *   2. html2canvas CANNOT do -webkit-background-clip: text → invisible text
- *   3. SVG elements crash html2canvas with "Unsupported image type"
- *
- * Fix: hide SVGs on the live DOM, then use the `onclone` callback to
- * solidify all backgrounds and fix gradient-text in html2canvas's own
- * internal clone BEFORE it renders the canvas.
+ * Draws dark cyberpunk-themed rectangles, text, and accent lines
+ * directly onto the PDF canvas. 100% reliable.
  */
 
 (function () {
@@ -20,12 +14,11 @@
   /* ── DOM refs ───────────────────────────────────────────── */
   var downloadBtn = document.getElementById("downloadCvBtn");
   var printBtn = document.getElementById("printCvBtn");
-  var cvRoot = document.getElementById("cvRoot");
   var toast = document.getElementById("cv-toast");
   var toastMsg = document.getElementById("toast-message");
 
-  if (!downloadBtn || !cvRoot) {
-    console.warn("CV Export: #downloadCvBtn or #cvRoot not found");
+  if (!downloadBtn) {
+    console.warn("CV Export: #downloadCvBtn not found");
     return;
   }
 
@@ -51,66 +44,383 @@
     }, 4500);
   }
 
-  /* ── Lazy-load html2pdf.js ──────────────────────────────── */
+  /* ── Lazy-load jsPDF (standalone — NO html2canvas) ──────── */
   function addScript(url) {
     return new Promise(function (ok, fail) {
       var s = document.createElement("script");
       s.src = url;
-      s.onload = function () {
-        setTimeout(ok, 300);
-      };
+      s.onload = function () { setTimeout(ok, 200); };
       s.onerror = fail;
       document.head.appendChild(s);
     });
   }
 
-  function ensureLib() {
-    if (window.html2pdf) return Promise.resolve();
+  function ensureJsPDF() {
+    if (window.jspdf && window.jspdf.jsPDF) return Promise.resolve();
+    if (window.jsPDF) return Promise.resolve();
     return addScript(
-      "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+      "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
     ).catch(function () {
       return addScript(
-        "https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"
+        "https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"
       );
     });
   }
 
-  /* ── Fix html2canvas's internal clone before it renders ─── */
-  function onCloneFix(clonedDoc) {
-    var root = clonedDoc.getElementById("cvRoot");
-    if (!root) return;
+  /* ── Color palette ──────────────────────────────────────── */
+  var C = {
+    bg:      [11, 15, 23],
+    surface: [17, 24, 39],
+    card:    [26, 34, 52],
+    border:  [40, 50, 70],
+    white:   [255, 255, 255],
+    text:    [229, 231, 235],
+    muted:   [156, 163, 175],
+    dim:     [107, 114, 128],
+    cyan:    [0, 212, 255],
+    purple:  [168, 85, 247],
+    pink:    [236, 72, 153],
+  };
 
-    // ── Inject a <style> block to override things html2canvas can't handle ──
-    var patch = clonedDoc.createElement("style");
-    patch.textContent = [
-      // Kill the radial-gradient on #cvRoot (html2canvas can't parse it)
-      "#cvRoot { background: #0b0f17 !important; }",
+  /* ── PDF Builder ────────────────────────────────────────── */
+  function buildPDF() {
+    var JsPDF = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
+    var doc = new JsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
 
-      // Kill gradient-text (background-clip:text is unsupported)
-      ".cv-section-title, .cv-doc-handles {",
-      "  background: none !important;",
-      "  background-image: none !important;",
-      "  -webkit-background-clip: initial !important;",
-      "  background-clip: initial !important;",
-      "  -webkit-text-fill-color: #00d4ff !important;",
-      "  color: #00d4ff !important;",
-      "}",
+    var pw = 210, ph = 297;
+    var mx = 12, mt = 12, mb = 14;
+    var cw = pw - mx * 2;
+    var y = mt;
 
-      // Solid background for the document card
-      ".cv-document { background: #111827 !important; }",
+    /* — helpers — */
+    function setColor(c)  { doc.setTextColor(c[0], c[1], c[2]); }
+    function setFill(c)   { doc.setFillColor(c[0], c[1], c[2]); }
+    function setStroke(c)  { doc.setDrawColor(c[0], c[1], c[2]); }
 
-      // Flatten the ::before gradient bar to a solid color
-      ".cv-document::before { background: #00d4ff !important; }",
+    function pageBg() {
+      setFill(C.bg);
+      doc.rect(0, 0, pw, ph, "F");
+    }
 
-      // Cards
-      ".cv-skill-group, .cv-project, .cv-education-card, .cv-interest-tag {",
-      "  background: #1a2234 !important;",
-      "}",
+    function needSpace(h) {
+      if (y + h > ph - mb) {
+        doc.addPage();
+        pageBg();
+        drawDocCard();
+        y = mt + 6;
+        return true;
+      }
+      return false;
+    }
 
-      // Kill all animations
-      "* { animation: none !important; transition: none !important; }",
-    ].join("\n");
-    clonedDoc.head.appendChild(patch);
+    function drawDocCard() {
+      setFill(C.surface);
+      doc.rect(mx, mt, cw, ph - mt - mb, "F");
+      setStroke(C.border);
+      doc.setLineWidth(0.3);
+      doc.rect(mx, mt, cw, ph - mt - mb, "S");
+      // Gradient bar
+      var third = cw / 3;
+      setFill(C.cyan);   doc.rect(mx, mt, third + 0.5, 1.5, "F");
+      setFill(C.purple);  doc.rect(mx + third, mt, third + 0.5, 1.5, "F");
+      setFill(C.pink);    doc.rect(mx + third * 2, mt, third + 0.5, 1.5, "F");
+    }
+
+    function card(cx, cy, w, h) {
+      setFill(C.card);
+      doc.rect(cx, cy, w, h, "F");
+      setStroke(C.border);
+      doc.setLineWidth(0.25);
+      doc.rect(cx, cy, w, h, "S");
+    }
+
+    function sectionTitle(title) {
+      needSpace(14);
+      y += 3;
+      setFill(C.cyan);
+      doc.rect(ix, y, iw, 0.5, "F");
+      y += 4;
+      setColor(C.cyan);
+      doc.setFontSize(8);
+      doc.setFont("helvetica", "bold");
+      doc.text(title.toUpperCase(), ix, y);
+      y += 5;
+    }
+
+    function wrappedText(text, x, size, color, style, maxW) {
+      setColor(color);
+      doc.setFontSize(size);
+      doc.setFont("helvetica", style || "normal");
+      var lines = doc.splitTextToSize(text, maxW);
+      var lineH = size * 0.42;
+      for (var i = 0; i < lines.length; i++) {
+        needSpace(lineH + 1);
+        doc.text(lines[i], x, y);
+        y += lineH;
+      }
+    }
+
+    /* — inner bounds — */
+    var ix = mx + 8;
+    var iw = cw - 16;
+
+    /* ═══════ Page 1 ═══════ */
+    pageBg();
+    drawDocCard();
+    y = mt + 7;
+
+    /* ── Header ── */
+    setColor(C.white);
+    doc.setFontSize(22);
+    doc.setFont("helvetica", "bold");
+    doc.text("Christopher Olabiyi", pw / 2, y, { align: "center" });
+    y += 9;
+
+    setColor(C.cyan);
+    doc.setFontSize(10);
+    doc.setFont("courier", "bold");
+    doc.text("CODEX  |  Michris", pw / 2, y, { align: "center" });
+    y += 6;
+
+    setColor(C.muted);
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
+    doc.text(
+      "Web Developer  \u00B7  Cybersecurity Student  \u00B7  Linux Enthusiast",
+      pw / 2, y, { align: "center" }
+    );
+    y += 7;
+
+    /* Contact info */
+    setColor(C.dim);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "normal");
+    doc.text(
+      "christolabiyi35@gmail.com   \u00B7   github.com/Chrinux-AI   \u00B7   LinkedIn   \u00B7   @christolabiyi35",
+      pw / 2, y, { align: "center" }
+    );
+    y += 5;
+
+    /* Separator */
+    setFill(C.border);
+    doc.rect(ix, y, iw, 0.3, "F");
+    y += 6;
+
+    /* ── Summary ── */
+    sectionTitle("Summary");
+    wrappedText(
+      "Motivated developer with a strong foundation in Linux systems, web development, " +
+      "and cybersecurity fundamentals. Experienced in building practical applications and " +
+      "managing development environments using open-source tools. Focused on secure web " +
+      "systems, automation, and applied computing with hands-on project experience.",
+      ix, 9, C.text, "normal", iw
+    );
+    y += 4;
+
+    /* ── Skills ── */
+    sectionTitle("Skills");
+
+    var skills = [
+      { title: "Development", items: "PHP \u00B7 MySQL/MariaDB \u00B7 JavaScript \u00B7 HTML \u00B7 CSS" },
+      { title: "Systems & Security", items: "Kali Linux \u00B7 Linux Admin \u00B7 Networking \u00B7 Web Security" },
+      { title: "Tools", items: "Git \u00B7 LAMP Stack \u00B7 Terminal \u00B7 VS Code \u00B7 Docker" },
+    ];
+
+    var skW = (iw - 6) / 3;
+    var skH = 22;
+    needSpace(skH + 4);
+
+    for (var si = 0; si < skills.length; si++) {
+      var sx = ix + si * (skW + 3);
+      card(sx, y, skW, skH);
+
+      // Cyan dot
+      setFill(C.cyan);
+      doc.circle(sx + 4.5, y + 6, 1, "F");
+
+      // Title
+      setColor(C.white);
+      doc.setFontSize(8);
+      doc.setFont("helvetica", "bold");
+      doc.text(skills[si].title, sx + 8, y + 7);
+
+      // Items
+      setColor(C.muted);
+      doc.setFontSize(7);
+      doc.setFont("helvetica", "normal");
+      var sLines = doc.splitTextToSize(skills[si].items, skW - 8);
+      for (var sli = 0; sli < sLines.length; sli++) {
+        doc.text(sLines[sli], sx + 4.5, y + 13 + sli * 3.2);
+      }
+    }
+    y += skH + 6;
+
+    /* ── Projects ── */
+    sectionTitle("Projects");
+
+    var projects = [
+      {
+        title: "EduSynch \u2013 School Management System",
+        tech: "PHP, MySQL, JavaScript",
+        bullets: [
+          "Designed and developed a comprehensive PHP-based school management system for student data management",
+          "Implemented secure authentication and database integration with structured backend logic",
+          "Focused on usability and maintainable code architecture",
+        ],
+      },
+      {
+        title: "Secure Login / OTP Module",
+        tech: "PHP, MySQL, Email API",
+        bullets: [
+          "Implemented authentication flow with two-factor OTP delivery via email",
+          "Developed comprehensive backend logging and diagnostic testing capabilities",
+          "Investigated and resolved service configuration issues for reliable email delivery",
+        ],
+      },
+      {
+        title: "Linux Automation & System Setup",
+        tech: "Bash, Linux, Shell",
+        bullets: [
+          "Configured Linux development environments and troubleshooting workflows",
+          "Automated setup and maintenance tasks using shell scripts and system tools",
+          "Created reusable scripts for common system administration tasks",
+        ],
+      },
+    ];
+
+    for (var pi = 0; pi < projects.length; pi++) {
+      var proj = projects[pi];
+
+      // Pre-calculate card height
+      var bh = 0;
+      doc.setFontSize(7.5);
+      doc.setFont("helvetica", "normal");
+      for (var bi = 0; bi < proj.bullets.length; bi++) {
+        var bl = doc.splitTextToSize(proj.bullets[bi], iw - 16);
+        bh += bl.length * 3.3 + 1.2;
+      }
+      var pCardH = 13 + bh + 3;
+
+      needSpace(pCardH + 4);
+      card(ix, y, iw, pCardH);
+
+      // Project title
+      setColor(C.white);
+      doc.setFontSize(9);
+      doc.setFont("helvetica", "bold");
+      doc.text(proj.title, ix + 5, y + 7);
+
+      // Tech badge
+      doc.setFontSize(6.5);
+      doc.setFont("courier", "normal");
+      var techTextW = doc.getTextWidth(proj.tech);
+      var badgeW = techTextW + 6;
+      var badgeX = ix + iw - badgeW - 4;
+      setFill([35, 25, 55]);
+      doc.rect(badgeX, y + 2.5, badgeW, 6, "F");
+      setColor(C.purple);
+      doc.text(proj.tech, badgeX + 3, y + 6.5);
+
+      // Bullets
+      var by = y + 13;
+      for (var bj = 0; bj < proj.bullets.length; bj++) {
+        doc.setFontSize(7.5);
+        doc.setFont("helvetica", "normal");
+        var bLines = doc.splitTextToSize(proj.bullets[bj], iw - 16);
+
+        // Cyan bullet
+        setFill(C.cyan);
+        doc.circle(ix + 6, by - 0.6, 0.7, "F");
+
+        setColor(C.muted);
+        for (var bk = 0; bk < bLines.length; bk++) {
+          doc.text(bLines[bk], ix + 10, by);
+          by += 3.3;
+        }
+        by += 1.2;
+      }
+
+      y += pCardH + 4;
+    }
+
+    /* ── Education ── */
+    sectionTitle("Education");
+
+    var eduH = 22;
+    needSpace(eduH + 4);
+    card(ix, y, iw, eduH);
+
+    setColor(C.white);
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "bold");
+    doc.text("BSc (In Progress)", ix + 5, y + 7);
+
+    setColor(C.muted);
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "normal");
+    doc.text("Ladoke Akintola University of Technology (LAUTECH)", ix + 5, y + 12);
+
+    setColor(C.dim);
+    doc.setFontSize(7);
+    doc.text("Cybersecurity Student (Not yet certified)", ix + 5, y + 16.5);
+
+    // Status badge
+    doc.setFontSize(6.5);
+    doc.setFont("courier", "normal");
+    var stText = "In Progress";
+    var stW = doc.getTextWidth(stText) + 6;
+    setFill([10, 30, 40]);
+    doc.rect(ix + iw - stW - 4, y + 3, stW, 6, "F");
+    setColor(C.cyan);
+    doc.text(stText, ix + iw - stW - 1, y + 7);
+
+    y += eduH + 6;
+
+    /* ── Interests ── */
+    sectionTitle("Interests");
+
+    var interests = [
+      "Cybersecurity", "Computational Physics", "Linux Systems",
+      "Secure Backend Development", "Open Source",
+    ];
+
+    needSpace(12);
+    var tagX = ix;
+    var tagH = 7;
+
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "normal");
+
+    for (var ti = 0; ti < interests.length; ti++) {
+      var tw = doc.getTextWidth(interests[ti]) + 8;
+      if (tagX + tw > ix + iw) {
+        tagX = ix;
+        y += tagH + 3;
+        needSpace(tagH + 3);
+      }
+      card(tagX, y, tw, tagH);
+      setColor(C.muted);
+      doc.text(interests[ti], tagX + 4, y + 4.8);
+      tagX += tw + 3;
+    }
+    y += tagH + 8;
+
+    /* ── Footer ── */
+    // Bottom gradient bar
+    var third = cw / 3;
+    setFill(C.cyan);   doc.rect(mx, ph - mb - 2, third + 0.5, 1, "F");
+    setFill(C.purple);  doc.rect(mx + third, ph - mb - 2, third + 0.5, 1, "F");
+    setFill(C.pink);    doc.rect(mx + third * 2, ph - mb - 2, third + 0.5, 1, "F");
+
+    setColor(C.dim);
+    doc.setFontSize(6);
+    doc.setFont("helvetica", "normal");
+    doc.text(
+      "Generated from portfolio  \u00B7  christolabiyi35@gmail.com  \u00B7  github.com/Chrinux-AI",
+      pw / 2, ph - mb + 2, { align: "center" }
+    );
+
+    return doc;
   }
 
   /* ── Download handler ───────────────────────────────────── */
@@ -121,79 +431,21 @@
     busy = true;
     downloadBtn.classList.add("loading");
     downloadBtn.disabled = true;
-    showToast("Generating PDF… please wait", "info");
+    showToast("Generating your CV\u2026", "info");
 
-    // Disable CSS animations on the live page
-    document.body.classList.add("exporting");
-
-    // Step 1: Hide every SVG inside #cvRoot so html2canvas never sees them
-    var hiddenSvgs = [];
-    var allSvgs = cvRoot.querySelectorAll("svg");
-    for (var i = 0; i < allSvgs.length; i++) {
-      var svg = allSvgs[i];
-      var prev = svg.style.display;
-      svg.style.setProperty("display", "none", "important");
-      hiddenSvgs.push({ el: svg, prev: prev });
-    }
-
-    ensureLib()
+    ensureJsPDF()
       .then(function () {
-        if (!window.html2pdf) throw new Error("Library did not load");
-
-        var opt = {
-          margin: [6, 6, 6, 6],
-          filename: "Christopher_Olabiyi_CV.pdf",
-          image: { type: "jpeg", quality: 0.95 },
-          html2canvas: {
-            scale: 2,
-            logging: true,
-            backgroundColor: "#0b0f17",
-            letterRendering: true,
-            useCORS: true,
-            allowTaint: true,
-            // ★ THE KEY FIX — onclone runs on html2canvas's internal clone
-            // BEFORE it renders. We override radial-gradients & clip-text
-            // with solid colors so html2canvas can actually render them.
-            onclone: onCloneFix,
-          },
-          jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-          pagebreak: {
-            mode: ["avoid-all", "css", "legacy"],
-            avoid: [
-              ".cv-section",
-              ".cv-project",
-              ".cv-skill-group",
-              ".cv-education-card",
-            ],
-          },
-        };
-
-        // Step 2: Render directly from #cvRoot (SVGs hidden, onclone fixes rest)
-        return window.html2pdf().set(opt).from(cvRoot).save();
-      })
-      .then(function () {
+        var JsPDF = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
+        if (!JsPDF) throw new Error("jsPDF library did not load");
+        var doc = buildPDF();
+        doc.save("Christopher_Olabiyi_CV.pdf");
         showToast("CV downloaded successfully!", "success");
       })
       .catch(function (err) {
         console.error("PDF export failed:", err);
-        showToast("Opening print dialog as fallback…", "error");
-        setTimeout(function () {
-          window.print();
-        }, 1500);
+        showToast("PDF generation failed \u2014 " + err.message, "error");
       })
       .finally(function () {
-        // Step 3: Restore all SVGs
-        for (var j = 0; j < hiddenSvgs.length; j++) {
-          var item = hiddenSvgs[j];
-          if (item.prev) {
-            item.el.style.display = item.prev;
-          } else {
-            item.el.style.removeProperty("display");
-          }
-        }
-        hiddenSvgs = [];
-
-        document.body.classList.remove("exporting");
         downloadBtn.classList.remove("loading");
         downloadBtn.disabled = false;
         busy = false;
@@ -207,13 +459,5 @@
     printBtn.addEventListener("click", function () {
       window.print();
     });
-  }
-
-  /* ── Auto-download via hash (from index.html link) ──────── */
-  if (window.location.hash === "#auto-download") {
-    if (history.replaceState) {
-      history.replaceState(null, "", window.location.pathname);
-    }
-    setTimeout(downloadPDF, 2000);
   }
 })();
