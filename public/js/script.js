@@ -252,8 +252,9 @@
 
     // Category icons (SVG paths)
     const icons = {
-      Development: `<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>`,
-      "Systems & Security": `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>`,
+      "Software / Web": `<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>`,
+      "Systems / Linux": `<rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>`,
+      Cybersecurity: `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>`,
       Tools: `<path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>`,
     };
 
@@ -266,7 +267,7 @@
       const avg = Math.round(
         items.reduce((sum, s) => sum + s.percent, 0) / items.length,
       );
-      return { name, items, avg, icon: icons[name] || icons.Development };
+      return { name, items, avg, icon: icons[name] || icons["Software / Web"] };
     });
 
     // 1. Render Summary Strip
@@ -627,8 +628,9 @@
 
     // Category icons
     const icons = {
-      Development: `<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>`,
-      "Systems & Security": `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>`,
+      "Software / Web": `<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>`,
+      "Systems / Linux": `<rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>`,
+      Cybersecurity: `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>`,
       Tools: `<path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>`,
     };
 
@@ -636,7 +638,7 @@
     proofGrid.innerHTML = Object.entries(evidenceData)
       .map(([category, bullets], index) => {
         const safeId = category.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase();
-        const icon = icons[category] || icons.Development;
+        const icon = icons[category] || icons["Software / Web"];
 
         return `
         <article class="proof-card glass-panel reveal" style="--delay: ${index * 0.1}s" data-category="${safeId}">
@@ -1709,6 +1711,109 @@ Reply to: ${email}`;
   }
 
   // ========================================
+  // ENGINEERING DOMAINS SECTION
+  // ========================================
+  function generateEngineeringDomains() {
+    const grid = document.getElementById("engDomainsGrid");
+    if (!grid) return;
+
+    const domains = window.ENGINEERING_DOMAINS || [];
+    if (!domains.length) return;
+
+    const icons = {
+      code: `<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="12" y1="2" x2="12" y2="22" opacity="0.3"/>`,
+      chip: `<rect x="4" y="4" width="16" height="16" rx="2"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="15" x2="23" y2="15"/>`,
+      shield: `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4" opacity="0.6"/>`,
+    };
+
+    const animations = {
+      "cursor-blink": `<div class="anim-cursor-blink"><span class="anim-prompt">$</span><span class="anim-block"></span></div>`,
+      "circuit-trace": `<div class="anim-circuit-trace"><div class="trace-line trace-h"></div><div class="trace-line trace-v"></div><div class="trace-dot" style="left:0;top:50%"></div></div>`,
+      "shield-pulse": `<div class="anim-shield-pulse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>`,
+    };
+
+    grid.innerHTML = domains
+      .map(
+        (d, i) => `
+      <div class="eng-domain-card glass-panel reveal" data-domain="${d.id}" style="--delay: ${i * 0.12}s">
+        ${d.id === "security" ? '<div class="anim-scan-line"></div>' : ""}
+        <div class="eng-domain-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            ${icons[d.icon] || icons.code}
+          </svg>
+        </div>
+        <h3 class="eng-domain-title">${d.title}</h3>
+        <ul class="eng-domain-points">
+          ${d.points.map((p) => `<li>${p}</li>`).join("")}
+        </ul>
+        <div class="eng-domain-anim">${animations[d.animation] || ""}</div>
+      </div>
+    `,
+      )
+      .join("");
+
+    // Pause animations when off-screen
+    if (!prefersReducedMotion) {
+      const cards = grid.querySelectorAll(".eng-domain-card");
+      const pauseObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            entry.target.classList.toggle("paused", !entry.isIntersecting);
+          });
+        },
+        { threshold: 0.1 },
+      );
+      cards.forEach((card) => pauseObserver.observe(card));
+    }
+  }
+
+  // ========================================
+  // ENGINEERING ENVIRONMENT SECTION
+  // ========================================
+  function generateEngineeringEnv() {
+    const container = document.getElementById("engEnvContainer");
+    if (!container) return;
+
+    const env = window.ENGINEERING_ENV;
+    if (!env) return;
+
+    const systemRows = (env.system || [])
+      .map(
+        (row) =>
+          `<div class="eng-env-row"><span class="eng-env-label">${row.label}:</span><span class="eng-env-value">${row.value}</span></div>`,
+      )
+      .join("");
+
+    const cmdRows = (env.commands || [])
+      .map(
+        (cmd) =>
+          `<div class="eng-env-cmd"><span class="cmd-text">${cmd}</span></div>`,
+      )
+      .join("");
+
+    container.innerHTML = `
+      <div class="eng-env-block">
+        <div class="eng-env-block-header">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+          <span>system-info</span>
+        </div>
+        <div class="eng-env-block-body">${systemRows}</div>
+      </div>
+      <div class="eng-env-block">
+        <div class="eng-env-block-header">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+          <span>environment-setup</span>
+        </div>
+        <div class="eng-env-block-body">${cmdRows}</div>
+      </div>
+    `;
+  }
+
+  // ========================================
   // CV PRINT HANDLER
   // ========================================
   function initCVPrint() {
@@ -1821,6 +1926,8 @@ Reply to: ${email}`;
       generateProofOfWork();
       generateCaseStudies();
       generateEnvironment();
+      generateEngineeringDomains();
+      generateEngineeringEnv();
       generateSecurityMindset();
       generateCIATriad();
       generateLinuxPermissions();

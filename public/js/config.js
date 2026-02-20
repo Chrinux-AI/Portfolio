@@ -9,23 +9,27 @@
 // SKILLS - Edit percentages here
 // ========================================
 export const SKILLS = {
-  Development: {
-    PHP: 70,
-    "MySQL/MariaDB": 65,
-    JavaScript: 75,
-    HTML: 85,
-    CSS: 80,
+  "Software / Web": {
+    "HTML / CSS": 90,
+    JavaScript: 80,
+    PHP: 75,
+    "Git & GitHub": 85,
   },
-  "Systems & Security": {
-    "Kali Linux": 70,
-    "Linux Administration": 65,
-    "Networking Basics": 60,
-    "Web Security Fundamentals": 60,
+  "Systems / Linux": {
+    "Linux Administration": 80,
+    "Bash / CLI": 85,
+    "Networking Fundamentals": 70,
+  },
+  Cybersecurity: {
+    "Web Security Basics": 70,
+    "Linux Security": 75,
+    "Threat Awareness": 65,
   },
   Tools: {
-    Git: 70,
-    "LAMP Stack": 65,
-    "Terminal Workflows": 80,
+    "VS Code": 90,
+    "Docker (basic)": 60,
+    "LAMP Stack": 70,
+    "Terminal Workflows": 85,
   },
 };
 
@@ -33,17 +37,24 @@ export const SKILLS = {
 // SKILL EVIDENCE - Proof points per category (used in Skills section)
 // ========================================
 export const SKILL_EVIDENCE = {
-  Development: [
+  "Software / Web": [
     "Built OTP email verification flow with rate limiting",
     "Designed MySQL schema for school management system",
+    "Built responsive cyberpunk portfolio with vanilla JS",
   ],
-  "Systems & Security": [
+  "Systems / Linux": [
     "Configured LAMP stack on multiple Linux distributions",
+    "Daily Kali Linux usage with hands-on troubleshooting",
+    "Shell scripting for automation and system diagnostics",
+  ],
+  Cybersecurity: [
     "Practiced web vulnerability testing in controlled labs",
+    "Input validation and secure authentication patterns",
   ],
   Tools: [
     "Git workflow with branches, rebasing, and clean commits",
     "Terminal-first development: vim, tmux, shell scripting",
+    "Docker basics for containerized dev environments",
   ],
 };
 
@@ -51,15 +62,19 @@ export const SKILL_EVIDENCE = {
 // EVIDENCE - Detailed proof of work per category
 // ========================================
 export const EVIDENCE = {
-  Development: [
+  "Software / Web": [
     "Built PHP + MySQL modules with structured backend logic",
     "Implemented authentication flows and database integration",
     "Investigated OTP/email delivery issues using logs and config",
   ],
-  "Systems & Security": [
+  "Systems / Linux": [
     "Daily Kali Linux usage with hands-on troubleshooting",
     "Linux administration: packages, services, permissions",
+    "Shell scripting for automated environment setup",
+  ],
+  Cybersecurity: [
     "Practical exposure to web security fundamentals in projects",
+    "Secure authentication patterns with input validation",
   ],
   Tools: [
     "Worked in LAMP dev environments",
@@ -133,8 +148,8 @@ export const CONFIG = {
     secondary: "Michris",
   },
   TITLE:
-    "Web Developer | Cybersecurity Student | Cybersecurity Student (BSc track)",
-  TAGLINE: "I build secure, practical systems with web tech and Linux.",
+    "Software & Hardware Engineer | Cybersecurity Student | Linux Enthusiast",
+  TAGLINE: "Building secure, engineered systems across software and hardware.",
 
   // Contact Information
   EMAIL: "christolabiyi35@gmail.com",
@@ -153,9 +168,10 @@ export const CONFIG = {
   TYPING_PHRASES: [
     "Christopher Olabiyi",
     "CODEX",
-    "Michris",
+    "Software Engineer",
+    "Hardware Engineer",
     "Cybersecurity Student",
-    "LAUTECH • BSc (In progress)",
+    "Linux Enthusiast",
   ],
 
   // Typing Animation Speeds (ms)
@@ -474,3 +490,63 @@ window.ENVIRONMENT = ENVIRONMENT;
 window.SECURITY_MINDSET = SECURITY_MINDSET;
 window.CIA_TRIAD = CIA_TRIAD;
 window.LINUX_PERMISSIONS = LINUX_PERMISSIONS;
+
+// ========================================
+// ENGINEERING DOMAINS — 3 discipline cards
+// ========================================
+export const ENGINEERING_DOMAINS = [
+  {
+    id: "software",
+    title: "Software Engineering",
+    icon: "code",
+    animation: "cursor-blink",
+    points: [
+      "Web Applications",
+      "Backend Logic",
+      "Systems Programming (Linux-based)",
+      "Automation & Tooling",
+    ],
+  },
+  {
+    id: "hardware",
+    title: "Hardware / Systems Engineering",
+    icon: "chip",
+    animation: "circuit-trace",
+    points: [
+      "Embedded Systems (conceptual)",
+      "Hardware–Software Interaction",
+      "System Diagnostics",
+      "Low-level System Understanding",
+    ],
+  },
+  {
+    id: "security",
+    title: "Cybersecurity & Systems Security",
+    icon: "shield",
+    animation: "shield-pulse",
+    points: [
+      "Linux Security",
+      "Networking Fundamentals",
+      "Threat Awareness",
+      "Defensive Security Concepts",
+    ],
+  },
+];
+window.ENGINEERING_DOMAINS = ENGINEERING_DOMAINS;
+
+// ========================================
+// ENGINEERING ENVIRONMENT — terminal credential blocks
+// ========================================
+export const ENGINEERING_ENV = {
+  system: [
+    { label: "OS", value: "Kali Linux / Linux" },
+    { label: "Shell", value: "zsh / bash" },
+    { label: "Editor", value: "VS Code + Vim" },
+  ],
+  commands: [
+    "python -m venv cyber_venv",
+    "source cyber_venv/bin/activate",
+    "pip install -r requirements.txt",
+  ],
+};
+window.ENGINEERING_ENV = ENGINEERING_ENV;

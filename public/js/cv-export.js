@@ -49,7 +49,9 @@
     return new Promise(function (ok, fail) {
       var s = document.createElement("script");
       s.src = url;
-      s.onload = function () { setTimeout(ok, 200); };
+      s.onload = function () {
+        setTimeout(ok, 200);
+      };
       s.onerror = fail;
       document.head.appendChild(s);
     });
@@ -59,27 +61,27 @@
     if (window.jspdf && window.jspdf.jsPDF) return Promise.resolve();
     if (window.jsPDF) return Promise.resolve();
     return addScript(
-      "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+      "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js",
     ).catch(function () {
       return addScript(
-        "https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"
+        "https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js",
       );
     });
   }
 
   /* ── Color palette ──────────────────────────────────────── */
   var C = {
-    bg:      [11, 15, 23],
+    bg: [11, 15, 23],
     surface: [17, 24, 39],
-    card:    [26, 34, 52],
-    border:  [40, 50, 70],
-    white:   [255, 255, 255],
-    text:    [229, 231, 235],
-    muted:   [156, 163, 175],
-    dim:     [107, 114, 128],
-    cyan:    [0, 212, 255],
-    purple:  [168, 85, 247],
-    pink:    [236, 72, 153],
+    card: [26, 34, 52],
+    border: [40, 50, 70],
+    white: [255, 255, 255],
+    text: [229, 231, 235],
+    muted: [156, 163, 175],
+    dim: [107, 114, 128],
+    cyan: [0, 212, 255],
+    purple: [168, 85, 247],
+    pink: [236, 72, 153],
   };
 
   /* ── PDF Builder ────────────────────────────────────────── */
@@ -87,15 +89,24 @@
     var JsPDF = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
     var doc = new JsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
 
-    var pw = 210, ph = 297;
-    var mx = 12, mt = 12, mb = 14;
+    var pw = 210,
+      ph = 297;
+    var mx = 12,
+      mt = 12,
+      mb = 14;
     var cw = pw - mx * 2;
     var y = mt;
 
     /* — helpers — */
-    function setColor(c)  { doc.setTextColor(c[0], c[1], c[2]); }
-    function setFill(c)   { doc.setFillColor(c[0], c[1], c[2]); }
-    function setStroke(c)  { doc.setDrawColor(c[0], c[1], c[2]); }
+    function setColor(c) {
+      doc.setTextColor(c[0], c[1], c[2]);
+    }
+    function setFill(c) {
+      doc.setFillColor(c[0], c[1], c[2]);
+    }
+    function setStroke(c) {
+      doc.setDrawColor(c[0], c[1], c[2]);
+    }
 
     function pageBg() {
       setFill(C.bg);
@@ -121,9 +132,12 @@
       doc.rect(mx, mt, cw, ph - mt - mb, "S");
       // Gradient bar
       var third = cw / 3;
-      setFill(C.cyan);   doc.rect(mx, mt, third + 0.5, 1.5, "F");
-      setFill(C.purple);  doc.rect(mx + third, mt, third + 0.5, 1.5, "F");
-      setFill(C.pink);    doc.rect(mx + third * 2, mt, third + 0.5, 1.5, "F");
+      setFill(C.cyan);
+      doc.rect(mx, mt, third + 0.5, 1.5, "F");
+      setFill(C.purple);
+      doc.rect(mx + third, mt, third + 0.5, 1.5, "F");
+      setFill(C.pink);
+      doc.rect(mx + third * 2, mt, third + 0.5, 1.5, "F");
     }
 
     function card(cx, cy, w, h) {
@@ -186,8 +200,10 @@
     doc.setFontSize(9);
     doc.setFont("helvetica", "normal");
     doc.text(
-      "Web Developer  \u00B7  Cybersecurity Student  \u00B7  Linux Enthusiast",
-      pw / 2, y, { align: "center" }
+      "Software & Hardware Engineer  \u00B7  Cybersecurity Student  \u00B7  Linux Enthusiast",
+      pw / 2,
+      y,
+      { align: "center" },
     );
     y += 7;
 
@@ -197,7 +213,9 @@
     doc.setFont("helvetica", "normal");
     doc.text(
       "christolabiyi35@gmail.com   \u00B7   github.com/Chrinux-AI   \u00B7   LinkedIn   \u00B7   @christolabiyi35",
-      pw / 2, y, { align: "center" }
+      pw / 2,
+      y,
+      { align: "center" },
     );
     y += 5;
 
@@ -209,11 +227,15 @@
     /* ── Summary ── */
     sectionTitle("Summary");
     wrappedText(
-      "Motivated developer with a strong foundation in Linux systems, web development, " +
-      "and cybersecurity fundamentals. Experienced in building practical applications and " +
-      "managing development environments using open-source tools. Focused on secure web " +
-      "systems, automation, and applied computing with hands-on project experience.",
-      ix, 9, C.text, "normal", iw
+      "Software & hardware engineer with a strong foundation in Linux systems, web development, " +
+        "and cybersecurity fundamentals. Experienced in building practical applications and " +
+        "managing development environments using open-source tools. Focused on secure systems " +
+        "engineering, automation, and applied computing with hands-on project experience.",
+      ix,
+      9,
+      C.text,
+      "normal",
+      iw,
     );
     y += 4;
 
@@ -221,9 +243,18 @@
     sectionTitle("Skills");
 
     var skills = [
-      { title: "Development", items: "PHP \u00B7 MySQL/MariaDB \u00B7 JavaScript \u00B7 HTML \u00B7 CSS" },
-      { title: "Systems & Security", items: "Kali Linux \u00B7 Linux Admin \u00B7 Networking \u00B7 Web Security" },
-      { title: "Tools", items: "Git \u00B7 LAMP Stack \u00B7 Terminal \u00B7 VS Code \u00B7 Docker" },
+      {
+        title: "Software / Web",
+        items: "HTML/CSS \u00B7 JavaScript \u00B7 PHP \u00B7 Git & GitHub",
+      },
+      {
+        title: "Systems / Linux",
+        items: "Linux Admin \u00B7 Bash/CLI \u00B7 Networking \u00B7 Docker",
+      },
+      {
+        title: "Cybersecurity",
+        items: "Web Security \u00B7 Linux Security \u00B7 Threat Awareness",
+      },
     ];
 
     var skW = (iw - 6) / 3;
@@ -343,6 +374,32 @@
       y += pCardH + 4;
     }
 
+    /* ── Engineering Exposure ── */
+    sectionTitle("Engineering Exposure");
+
+    var engPoints = [
+      "Software systems development (PHP, JavaScript, MySQL)",
+      "Hardware\u2013software interaction concepts and embedded systems fundamentals",
+      "Linux-based system environments and administration",
+      "Security-first thinking applied to application design",
+    ];
+
+    for (var ei = 0; ei < engPoints.length; ei++) {
+      needSpace(6);
+      setFill(C.cyan);
+      doc.circle(ix + 4, y - 0.6, 0.7, "F");
+      setColor(C.text);
+      doc.setFontSize(8);
+      doc.setFont("helvetica", "normal");
+      var eLine = doc.splitTextToSize(engPoints[ei], iw - 12);
+      for (var ek = 0; ek < eLine.length; ek++) {
+        doc.text(eLine[ek], ix + 8, y);
+        y += 3.5;
+      }
+      y += 1;
+    }
+    y += 3;
+
     /* ── Education ── */
     sectionTitle("Education");
 
@@ -358,7 +415,11 @@
     setColor(C.muted);
     doc.setFontSize(8);
     doc.setFont("helvetica", "normal");
-    doc.text("Ladoke Akintola University of Technology (LAUTECH)", ix + 5, y + 12);
+    doc.text(
+      "Ladoke Akintola University of Technology (LAUTECH)",
+      ix + 5,
+      y + 12,
+    );
 
     setColor(C.dim);
     doc.setFontSize(7);
@@ -380,8 +441,11 @@
     sectionTitle("Interests");
 
     var interests = [
-      "Cybersecurity", "Computational Physics", "Linux Systems",
-      "Secure Backend Development", "Open Source",
+      "Cybersecurity",
+      "Embedded Systems",
+      "Linux Systems",
+      "Secure Backend Development",
+      "Open Source",
     ];
 
     needSpace(12);
@@ -408,16 +472,21 @@
     /* ── Footer ── */
     // Bottom gradient bar
     var third = cw / 3;
-    setFill(C.cyan);   doc.rect(mx, ph - mb - 2, third + 0.5, 1, "F");
-    setFill(C.purple);  doc.rect(mx + third, ph - mb - 2, third + 0.5, 1, "F");
-    setFill(C.pink);    doc.rect(mx + third * 2, ph - mb - 2, third + 0.5, 1, "F");
+    setFill(C.cyan);
+    doc.rect(mx, ph - mb - 2, third + 0.5, 1, "F");
+    setFill(C.purple);
+    doc.rect(mx + third, ph - mb - 2, third + 0.5, 1, "F");
+    setFill(C.pink);
+    doc.rect(mx + third * 2, ph - mb - 2, third + 0.5, 1, "F");
 
     setColor(C.dim);
     doc.setFontSize(6);
     doc.setFont("helvetica", "normal");
     doc.text(
       "Generated from portfolio  \u00B7  christolabiyi35@gmail.com  \u00B7  github.com/Chrinux-AI",
-      pw / 2, ph - mb + 2, { align: "center" }
+      pw / 2,
+      ph - mb + 2,
+      { align: "center" },
     );
 
     return doc;

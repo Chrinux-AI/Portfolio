@@ -4926,3 +4926,508 @@ textarea {
     padding: var(--section-padding-mobile);
   }
 }
+
+/* ========================================
+   STATUS INDICATOR (Hero)
+   ======================================== */
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+  animation: status-pulse 2s ease-in-out infinite;
+}
+
+.status-text {
+  color: #22c55e;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+}
+
+.status-sep {
+  color: var(--border-color);
+}
+
+.status-micro {
+  color: var(--text-muted);
+  opacity: 0.7;
+  font-size: 0.65rem;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+@keyframes status-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+  }
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 4px rgba(34, 197, 94, 0.2);
+  }
+}
+
+/* ========================================
+   ENGINEERING DOMAINS SECTION
+   ======================================== */
+.eng-domains-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.eng-domain-card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 32px 24px 28px;
+  overflow: hidden;
+  transition:
+    border-color var(--transition-normal),
+    box-shadow var(--transition-normal);
+}
+
+.eng-domain-card:hover {
+  border-color: var(--cyan);
+  box-shadow: var(--shadow-cyan);
+}
+
+/* Card top accent */
+.eng-domain-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.eng-domain-card[data-domain="software"]::before {
+  background: var(--cyan);
+}
+.eng-domain-card[data-domain="hardware"]::before {
+  background: var(--magenta);
+}
+.eng-domain-card[data-domain="security"]::before {
+  background: linear-gradient(90deg, var(--cyan), var(--magenta));
+}
+
+/* Domain icon */
+.eng-domain-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: rgba(0, 240, 255, 0.06);
+  border: 1px solid rgba(0, 240, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.eng-domain-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--cyan);
+  fill: none;
+  stroke-width: 1.5;
+  transition: transform var(--transition-normal);
+}
+
+.eng-domain-card:hover .eng-domain-icon svg {
+  transform: scale(1.1);
+}
+
+.eng-domain-card[data-domain="hardware"] .eng-domain-icon {
+  background: rgba(255, 0, 255, 0.06);
+  border-color: rgba(255, 0, 255, 0.12);
+}
+.eng-domain-card[data-domain="hardware"] .eng-domain-icon svg {
+  stroke: var(--magenta);
+}
+
+.eng-domain-card[data-domain="security"] .eng-domain-icon {
+  background: rgba(168, 85, 247, 0.06);
+  border-color: rgba(168, 85, 247, 0.12);
+}
+.eng-domain-card[data-domain="security"] .eng-domain-icon svg {
+  stroke: #a855f7;
+}
+
+.eng-domain-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.eng-domain-points {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.eng-domain-points li {
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 10px;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.eng-domain-points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.eng-domain-card[data-domain="software"] .eng-domain-points li::before {
+  background: var(--cyan);
+}
+.eng-domain-card[data-domain="hardware"] .eng-domain-points li::before {
+  background: var(--magenta);
+}
+.eng-domain-card[data-domain="security"] .eng-domain-points li::before {
+  background: #a855f7;
+}
+
+/* Micro-animation container */
+.eng-domain-anim {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 56px;
+  height: 32px;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* ── Terminal cursor blink (Software) ── */
+.anim-cursor-blink {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--cyan);
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.anim-cursor-blink .anim-prompt {
+  opacity: 0.5;
+}
+
+.anim-cursor-blink .anim-block {
+  display: inline-block;
+  width: 7px;
+  height: 12px;
+  background: var(--cyan);
+  animation: eng-cursor 1s step-end infinite;
+}
+
+@keyframes eng-cursor {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ── Circuit trace glow (Hardware) ── */
+.anim-circuit-trace {
+  position: relative;
+  overflow: hidden;
+}
+
+.anim-circuit-trace .trace-line {
+  position: absolute;
+  background: var(--magenta);
+  border-radius: 1px;
+}
+
+.anim-circuit-trace .trace-h {
+  height: 1px;
+  width: 100%;
+  top: 50%;
+  animation: trace-flow-h 3s ease-in-out infinite;
+}
+
+.anim-circuit-trace .trace-v {
+  width: 1px;
+  height: 100%;
+  left: 70%;
+  animation: trace-flow-v 3s ease-in-out infinite 0.5s;
+}
+
+.anim-circuit-trace .trace-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--magenta);
+  position: absolute;
+  box-shadow: 0 0 6px var(--magenta);
+  animation: trace-dot-move 3s ease-in-out infinite;
+}
+
+@keyframes trace-flow-h {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left;
+    opacity: 0;
+  }
+  30% {
+    transform: scaleX(1);
+    opacity: 0.8;
+  }
+  70% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes trace-flow-v {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+    opacity: 0;
+  }
+  30% {
+    transform: scaleY(1);
+    opacity: 0.6;
+  }
+  70% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes trace-dot-move {
+  0% {
+    left: 0;
+    top: 50%;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  50% {
+    left: 70%;
+    top: 50%;
+  }
+  70% {
+    left: 70%;
+    top: 0;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    left: 70%;
+    top: 0;
+    opacity: 0;
+  }
+}
+
+/* ── Shield pulse (Security) ── */
+.anim-shield-pulse svg {
+  width: 24px;
+  height: 24px;
+  stroke: #a855f7;
+  fill: none;
+  stroke-width: 1.5;
+  animation: shield-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes shield-pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 transparent);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 4px rgba(168, 85, 247, 0.4));
+  }
+}
+
+/* Scanning line overlay for security card */
+.anim-scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #a855f7, transparent);
+  animation: scan-sweep 3s ease-in-out infinite;
+  pointer-events: none;
+  opacity: 0.15;
+}
+
+@keyframes scan-sweep {
+  0% {
+    top: 0;
+  }
+  100% {
+    top: 100%;
+  }
+}
+
+/* ── prefers-reduced-motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .status-dot,
+  .anim-block,
+  .trace-line,
+  .trace-dot,
+  .anim-shield-pulse svg,
+  .anim-scan-line {
+    animation: none !important;
+  }
+  .status-dot {
+    opacity: 1;
+  }
+  .anim-block {
+    opacity: 1;
+  }
+}
+
+/* ── Off-screen pause ── */
+.eng-domain-card.paused .anim-block,
+.eng-domain-card.paused .trace-line,
+.eng-domain-card.paused .trace-dot,
+.eng-domain-card.paused .anim-shield-pulse svg,
+.eng-domain-card.paused .anim-scan-line {
+  animation-play-state: paused !important;
+}
+
+@media (max-width: 900px) {
+  .eng-domains-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .status-indicator {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+}
+
+/* ========================================
+   ENGINEERING ENVIRONMENT
+   ======================================== */
+.eng-env-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.eng-env-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.eng-env-block-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(0, 240, 255, 0.03);
+  border-bottom: 1px solid var(--border-color);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.eng-env-block-header .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.eng-env-block-header .dot-red {
+  background: #ef4444;
+}
+.eng-env-block-header .dot-yellow {
+  background: #eab308;
+}
+.eng-env-block-header .dot-green {
+  background: #22c55e;
+}
+
+.eng-env-block-body {
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.8;
+}
+
+.eng-env-row {
+  display: flex;
+  gap: 8px;
+}
+
+.eng-env-label {
+  color: var(--cyan);
+  min-width: 80px;
+  font-weight: 500;
+}
+
+.eng-env-value {
+  color: var(--text-secondary);
+}
+
+.eng-env-cmd {
+  color: var(--text-muted);
+  padding: 2px 0;
+}
+
+.eng-env-cmd::before {
+  content: "$ ";
+  color: #22c55e;
+  opacity: 0.7;
+}
+
+.eng-env-cmd .cmd-text {
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .eng-env-container {
+    grid-template-columns: 1fr;
+  }
+}
