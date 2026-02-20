@@ -12,6 +12,7 @@ export const SKILLS = {
   "Software / Web": {
     "HTML / CSS": 90,
     JavaScript: 80,
+    Python: 65,
     PHP: 75,
     "Git & GitHub": 85,
   },
@@ -19,17 +20,19 @@ export const SKILLS = {
     "Linux Administration": 80,
     "Bash / CLI": 85,
     "Networking Fundamentals": 70,
+    "Docker (basic)": 60,
   },
   Cybersecurity: {
-    "Web Security Basics": 70,
+    "Web Security": 70,
     "Linux Security": 75,
-    "Threat Awareness": 65,
+    "Network Analysis": 65,
+    "Threat Assessment": 65,
   },
   Tools: {
     "VS Code": 90,
-    "Docker (basic)": 60,
     "LAMP Stack": 70,
     "Terminal Workflows": 85,
+    Postman: 70,
   },
 };
 
@@ -41,20 +44,23 @@ export const SKILL_EVIDENCE = {
     "Built OTP email verification flow with rate limiting",
     "Designed MySQL schema for school management system",
     "Built responsive cyberpunk portfolio with vanilla JS",
+    "Python scripting for automation and environment setup",
   ],
   "Systems / Linux": [
     "Configured LAMP stack on multiple Linux distributions",
     "Daily Kali Linux usage with hands-on troubleshooting",
     "Shell scripting for automation and system diagnostics",
+    "Docker basics for containerized development environments",
   ],
   Cybersecurity: [
     "Practiced web vulnerability testing in controlled labs",
     "Input validation and secure authentication patterns",
+    "Network traffic analysis with Wireshark and Nmap",
   ],
   Tools: [
     "Git workflow with branches, rebasing, and clean commits",
     "Terminal-first development: vim, tmux, shell scripting",
-    "Docker basics for containerized dev environments",
+    "API testing and debugging with Postman",
   ],
 };
 
@@ -66,20 +72,24 @@ export const EVIDENCE = {
     "Built PHP + MySQL modules with structured backend logic",
     "Implemented authentication flows and database integration",
     "Investigated OTP/email delivery issues using logs and config",
+    "Python virtual environment management for project isolation",
   ],
   "Systems / Linux": [
     "Daily Kali Linux usage with hands-on troubleshooting",
     "Linux administration: packages, services, permissions",
     "Shell scripting for automated environment setup",
+    "Docker containerized environments for development",
   ],
   Cybersecurity: [
     "Practical exposure to web security fundamentals in projects",
     "Secure authentication patterns with input validation",
+    "Network analysis with Wireshark and port scanning with Nmap",
   ],
   Tools: [
     "Worked in LAMP dev environments",
     "Git-based workflow for code versioning",
     "Terminal-first setup and diagnostics",
+    "API testing and endpoint debugging with Postman",
   ],
 };
 
@@ -198,7 +208,7 @@ export const CONFIG = {
     },
     {
       cmd: "cat skills.txt",
-      output: "PHP | MySQL | JavaScript | Linux | Security",
+      output: "PHP | MySQL | JavaScript | Python | Linux | Security",
     },
   ],
 
@@ -501,8 +511,8 @@ export const ENGINEERING_DOMAINS = [
     icon: "code",
     animation: "cursor-blink",
     points: [
-      "Web Applications",
-      "Backend Logic",
+      "Web Applications (PHP, JS, Python)",
+      "Backend Logic & REST APIs",
       "Systems Programming (Linux-based)",
       "Automation & Tooling",
     ],

@@ -227,10 +227,10 @@
     /* ── Summary ── */
     sectionTitle("Summary");
     wrappedText(
-      "Software & hardware engineer with a strong foundation in Linux systems, web development, " +
-        "and cybersecurity fundamentals. Experienced in building practical applications and " +
-        "managing development environments using open-source tools. Focused on secure systems " +
-        "engineering, automation, and applied computing with hands-on project experience.",
+      "Software & hardware engineer with hands-on experience in Linux systems, full-stack web development, " +
+        "and cybersecurity fundamentals. Building production applications with PHP, JavaScript, Python, " +
+        "and MySQL while managing Linux-based development environments. Focused on secure systems " +
+        "engineering, automation, and practical tooling \u2014 with deployed projects and active open-source contributions.",
       ix,
       9,
       C.text,
@@ -245,7 +245,7 @@
     var skills = [
       {
         title: "Software / Web",
-        items: "HTML/CSS \u00B7 JavaScript \u00B7 PHP \u00B7 Git & GitHub",
+        items: "HTML/CSS \u00B7 JavaScript \u00B7 Python \u00B7 PHP \u00B7 Git & GitHub",
       },
       {
         title: "Systems / Linux",
@@ -253,27 +253,34 @@
       },
       {
         title: "Cybersecurity",
-        items: "Web Security \u00B7 Linux Security \u00B7 Threat Awareness",
+        items: "Web Security \u00B7 Linux Security \u00B7 Network Analysis \u00B7 Threat Assessment",
+      },
+      {
+        title: "Tools & Workflow",
+        items: "VS Code \u00B7 LAMP Stack \u00B7 Terminal Workflows \u00B7 Postman",
       },
     ];
 
-    var skW = (iw - 6) / 3;
+    var skW = (iw - 4) / 2;
     var skH = 22;
-    needSpace(skH + 4);
+    needSpace(skH * 2 + 8);
 
     for (var si = 0; si < skills.length; si++) {
-      var sx = ix + si * (skW + 3);
-      card(sx, y, skW, skH);
+      var row = Math.floor(si / 2);
+      var col = si % 2;
+      var sx = ix + col * (skW + 4);
+      var sy = y + row * (skH + 4);
+      card(sx, sy, skW, skH);
 
       // Cyan dot
       setFill(C.cyan);
-      doc.circle(sx + 4.5, y + 6, 1, "F");
+      doc.circle(sx + 4.5, sy + 6, 1, "F");
 
       // Title
       setColor(C.white);
       doc.setFontSize(8);
       doc.setFont("helvetica", "bold");
-      doc.text(skills[si].title, sx + 8, y + 7);
+      doc.text(skills[si].title, sx + 8, sy + 7);
 
       // Items
       setColor(C.muted);
@@ -281,40 +288,48 @@
       doc.setFont("helvetica", "normal");
       var sLines = doc.splitTextToSize(skills[si].items, skW - 8);
       for (var sli = 0; sli < sLines.length; sli++) {
-        doc.text(sLines[sli], sx + 4.5, y + 13 + sli * 3.2);
+        doc.text(sLines[sli], sx + 4.5, sy + 13 + sli * 3.2);
       }
     }
-    y += skH + 6;
+    y += skH * 2 + 10;
 
     /* ── Projects ── */
     sectionTitle("Projects");
 
     var projects = [
       {
+        title: "Secure Auth Starter Kit",
+        tech: "PHP, MySQL, AJAX, Email API",
+        bullets: [
+          "Building a security-first authentication boilerplate with OTP verification, rate limiting, and session management",
+          "Implemented email-based two-factor authentication with comprehensive backend logging",
+          "Designing reusable patterns for secure credential handling and audit trails",
+        ],
+      },
+      {
+        title: "Portfolio \u2014 Engineering UI",
+        tech: "HTML, CSS, JS, Vercel",
+        bullets: [
+          "Designed and built a responsive cyberpunk-themed portfolio with accessible dark UI and config-driven architecture",
+          "Implemented serverless email API using Vercel functions and Nodemailer for contact form delivery",
+          "Built programmatic PDF export with jsPDF for reliable CV generation",
+        ],
+      },
+      {
+        title: "Linux Automation Toolkit",
+        tech: "Bash, Linux, Shell",
+        bullets: [
+          "Creating practical scripts for automated system setup, environment configuration, and diagnostics",
+          "Standardized logging, output formatting, and maintenance workflows for Linux environments",
+          "Building reusable templates for common system administration tasks",
+        ],
+      },
+      {
         title: "EduSynch \u2013 School Management System",
         tech: "PHP, MySQL, JavaScript",
         bullets: [
-          "Designed and developed a comprehensive PHP-based school management system for student data management",
-          "Implemented secure authentication and database integration with structured backend logic",
-          "Focused on usability and maintainable code architecture",
-        ],
-      },
-      {
-        title: "Secure Login / OTP Module",
-        tech: "PHP, MySQL, Email API",
-        bullets: [
-          "Implemented authentication flow with two-factor OTP delivery via email",
-          "Developed comprehensive backend logging and diagnostic testing capabilities",
-          "Investigated and resolved service configuration issues for reliable email delivery",
-        ],
-      },
-      {
-        title: "Linux Automation & System Setup",
-        tech: "Bash, Linux, Shell",
-        bullets: [
-          "Configured Linux development environments and troubleshooting workflows",
-          "Automated setup and maintenance tasks using shell scripts and system tools",
-          "Created reusable scripts for common system administration tasks",
+          "Developed a PHP-based school management system for student data, grades, and administrative workflows",
+          "Currently being refactored to improve security patterns and code architecture",
         ],
       },
     ];
@@ -378,10 +393,11 @@
     sectionTitle("Engineering Exposure");
 
     var engPoints = [
-      "Software systems development (PHP, JavaScript, MySQL)",
+      "Full-stack web development with PHP, JavaScript, Python, and MySQL \u2014 REST APIs and server-side logic",
+      "Linux system administration, shell scripting (Bash), and cron-based automation",
+      "Security tooling: Wireshark, Nmap, Burp Suite \u2014 network analysis and vulnerability assessment",
       "Hardware\u2013software interaction concepts and embedded systems fundamentals",
-      "Linux-based system environments and administration",
-      "Security-first thinking applied to application design",
+      "Deployment and CI/CD: Git workflows, Vercel serverless functions, Docker basics",
     ];
 
     for (var ei = 0; ei < engPoints.length; ei++) {
@@ -444,7 +460,8 @@
       "Cybersecurity",
       "Embedded Systems",
       "Linux Systems",
-      "Secure Backend Development",
+      "Cloud & DevOps",
+      "Secure Backend Dev",
       "Open Source",
     ];
 

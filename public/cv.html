@@ -266,7 +266,7 @@
       /* Skills Grid */
       .cv-skills-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 24px;
       }
 
@@ -741,12 +741,13 @@
               <section class="cv-section" aria-labelledby="summary-title">
                 <h2 class="cv-section-title" id="summary-title">Summary</h2>
                 <p class="cv-summary-text">
-                  Software & hardware engineer with a strong foundation in
-                  Linux systems, web development, and cybersecurity
-                  fundamentals. Experienced in building practical applications
-                  and managing development environments using open-source
-                  tools. Focused on secure systems engineering, automation, and
-                  applied computing with hands-on project experience.
+                  Software & hardware engineer with hands-on experience in Linux
+                  systems, full-stack web development, and cybersecurity
+                  fundamentals. Building production applications with PHP,
+                  JavaScript, Python, and MySQL while managing Linux-based
+                  development environments. Focused on secure systems
+                  engineering, automation, and practical tooling — with
+                  deployed projects and active open-source contributions.
                 </p>
               </section>
 
@@ -757,26 +758,28 @@
                   <div class="cv-skill-group">
                     <h4>Software / Web</h4>
                     <div class="cv-skill-list">
-                      HTML / CSS · JavaScript · PHP · Git & GitHub
+                      HTML / CSS · JavaScript · Python · PHP · Git & GitHub
                     </div>
                   </div>
                   <div class="cv-skill-group">
                     <h4>Systems / Linux</h4>
                     <div class="cv-skill-list">
                       Linux Administration · Bash / CLI · Networking
-                      Fundamentals
+                      Fundamentals · Docker
                     </div>
                   </div>
                   <div class="cv-skill-group">
                     <h4>Cybersecurity</h4>
                     <div class="cv-skill-list">
-                      Web Security Basics · Linux Security · Threat Awareness
+                      Web Security · Linux Security · Network Analysis ·
+                      Threat Assessment
                     </div>
                   </div>
                   <div class="cv-skill-group">
-                    <h4>Tools</h4>
+                    <h4>Tools & Workflow</h4>
                     <div class="cv-skill-list">
-                      VS Code · Docker · LAMP Stack · Terminal Workflows
+                      VS Code · LAMP Stack · Terminal Workflows · Postman ·
+                      Cron Jobs
                     </div>
                   </div>
                 </div>
@@ -789,42 +792,24 @@
                 <article class="cv-project">
                   <header class="cv-project-header">
                     <h3 class="cv-project-title">
-                      EduSynch – School Management System
+                      Secure Auth Starter Kit
                     </h3>
-                    <span class="cv-project-tech">PHP, MySQL, JavaScript</span>
+                    <span class="cv-project-tech"
+                      >PHP, MySQL, AJAX, Email API</span
+                    >
                   </header>
                   <ul class="cv-project-bullets">
                     <li>
-                      Designed and developed a comprehensive PHP-based school
-                      management system for student data management
+                      Building a security-first authentication boilerplate with
+                      OTP verification, rate limiting, and session management
                     </li>
                     <li>
-                      Implemented secure authentication and database integration
-                      with structured backend logic
+                      Implemented email-based two-factor authentication with
+                      comprehensive backend logging
                     </li>
                     <li>
-                      Focused on usability and maintainable code architecture
-                    </li>
-                  </ul>
-                </article>
-
-                <article class="cv-project">
-                  <header class="cv-project-header">
-                    <h3 class="cv-project-title">Secure Login / OTP Module</h3>
-                    <span class="cv-project-tech">PHP, MySQL, Email API</span>
-                  </header>
-                  <ul class="cv-project-bullets">
-                    <li>
-                      Implemented authentication flow with two-factor OTP
-                      delivery via email
-                    </li>
-                    <li>
-                      Developed comprehensive backend logging and diagnostic
-                      testing capabilities
-                    </li>
-                    <li>
-                      Investigated and resolved service configuration issues for
-                      reliable email delivery
+                      Designing reusable patterns for secure credential handling
+                      and audit trails
                     </li>
                   </ul>
                 </article>
@@ -832,22 +817,68 @@
                 <article class="cv-project">
                   <header class="cv-project-header">
                     <h3 class="cv-project-title">
-                      Linux Automation & System Setup
+                      Portfolio — Engineering UI
+                    </h3>
+                    <span class="cv-project-tech"
+                      >HTML, CSS, JS, Vercel</span
+                    >
+                  </header>
+                  <ul class="cv-project-bullets">
+                    <li>
+                      Designed and built a responsive cyberpunk-themed portfolio
+                      with accessible dark UI and config-driven architecture
+                    </li>
+                    <li>
+                      Implemented serverless email API using Vercel functions
+                      and Nodemailer for contact form delivery
+                    </li>
+                    <li>
+                      Built programmatic PDF export with jsPDF for reliable
+                      CV generation without html2canvas
+                    </li>
+                  </ul>
+                </article>
+
+                <article class="cv-project">
+                  <header class="cv-project-header">
+                    <h3 class="cv-project-title">
+                      Linux Automation Toolkit
                     </h3>
                     <span class="cv-project-tech">Bash, Linux, Shell</span>
                   </header>
                   <ul class="cv-project-bullets">
                     <li>
-                      Configured Linux development environments and
-                      troubleshooting workflows
+                      Creating practical scripts for automated system setup,
+                      environment configuration, and diagnostics
                     </li>
                     <li>
-                      Automated setup and maintenance tasks using shell scripts
-                      and system tools
+                      Standardized logging, output formatting, and maintenance
+                      workflows for Linux environments
                     </li>
                     <li>
-                      Created reusable scripts for common system administration
-                      tasks
+                      Building reusable templates for common system
+                      administration tasks
+                    </li>
+                  </ul>
+                </article>
+
+                <article class="cv-project">
+                  <header class="cv-project-header">
+                    <h3 class="cv-project-title">
+                      EduSynch – School Management System
+                    </h3>
+                    <span class="cv-project-tech"
+                      >PHP, MySQL, JavaScript</span
+                    >
+                  </header>
+                  <ul class="cv-project-bullets">
+                    <li>
+                      Developed a PHP-based school management system for
+                      student data, grades, and administrative workflows
+                    </li>
+                    <li>
+                      Currently being refactored to improve security patterns
+                      and code architecture
                     </li>
                   </ul>
                 </article>
@@ -859,13 +890,26 @@
                   Engineering Exposure
                 </h2>
                 <ul class="cv-project-bullets">
-                  <li>Software systems development (PHP, JavaScript, MySQL)</li>
+                  <li>
+                    Full-stack web development with PHP, JavaScript, Python,
+                    and MySQL — REST APIs and server-side logic
+                  </li>
+                  <li>
+                    Linux system administration, shell scripting (Bash), and
+                    cron-based automation
+                  </li>
+                  <li>
+                    Security tooling: Wireshark, Nmap, Burp Suite — network
+                    analysis and vulnerability assessment
+                  </li>
                   <li>
                     Hardware–software interaction concepts and embedded systems
                     fundamentals
                   </li>
-                  <li>Linux-based system environments and administration</li>
-                  <li>Security-first thinking applied to application design</li>
+                  <li>
+                    Deployment and CI/CD: Git workflows, Vercel serverless
+                    functions, Docker basics
+                  </li>
                 </ul>
               </section>
 
@@ -895,6 +939,7 @@
                   <span class="cv-interest-tag">Cybersecurity</span>
                   <span class="cv-interest-tag">Embedded Systems</span>
                   <span class="cv-interest-tag">Linux Systems</span>
+                  <span class="cv-interest-tag">Cloud & DevOps</span>
                   <span class="cv-interest-tag"
                     >Secure Backend Development</span
                   >
