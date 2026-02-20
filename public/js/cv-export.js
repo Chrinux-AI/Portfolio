@@ -395,7 +395,7 @@
     var engPoints = [
       "Full-stack web development with PHP, JavaScript, Python, and MySQL \u2014 REST APIs and server-side logic",
       "Linux system administration, shell scripting (Bash), and cron-based automation",
-      "Security tooling: Wireshark, Nmap, Burp Suite \u2014 network analysis and vulnerability assessment",
+      "Security fundamentals: OWASP Top 10, Linux hardening, secure authentication patterns, and firewall basics",
       "Hardware\u2013software interaction concepts and embedded systems fundamentals",
       "Deployment and CI/CD: Git workflows, Vercel serverless functions, Docker basics",
     ];
